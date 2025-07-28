@@ -29,3 +29,35 @@
 2025-07-28 13:55:19,062 - main - INFO - 步驟 4: 生成 Excel 檔案
 2025-07-28 13:55:20,168 - core.template_mapper - INFO - Successfully mapped 20 nets to Excel template: ..\test_output.xlsx
 2025-07-28 13:55:20,168 - main - INFO - === 處理完成! 輸出檔案: ..\test_output.xlsx ===
+2025-07-28 15:17:05,042 - main - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-28 15:17:05,042 - main - INFO - 處理 Netlist 檔案: ..\tests\data\sample_netlist.net
+2025-07-28 15:17:05,042 - main - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-28 15:17:05,046 - core.netlist_parser - INFO - Extracted 20 net names from ..\tests\data\sample_netlist.net
+2025-07-28 15:17:05,047 - main - INFO - 提取到 20 個網路名稱
+2025-07-28 15:17:05,047 - main - INFO - 步驟 2: 分類網路名稱
+2025-07-28 15:17:05,048 - core.net_classifier - INFO - Classified 20 nets
+2025-07-28 15:17:05,048 - main - INFO -   Other: 2 個網路
+2025-07-28 15:17:05,048 - main - INFO -   Communication Interface: 8 個網路
+2025-07-28 15:17:05,049 - main - INFO -   RF: 8 個網路
+2025-07-28 15:17:05,049 - main - INFO -   Power: 2 個網路
+2025-07-28 15:17:05,049 - main - INFO - 步驟 3: 應用佈局規則
+2025-07-28 15:17:05,050 - core.rule_engine - INFO - Applied layout rules to 20 nets
+2025-07-28 15:17:05,050 - main - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-28 15:17:05,650 - core.template_mapper - INFO - Successfully mapped 20 nets to Excel template: ..\test_output.xlsx
+2025-07-28 15:17:05,651 - main - INFO - === 處理完成! 輸出檔案: ..\test_output.xlsx ===
+2025-07-28 15:18:22,808 - __main__ - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-28 15:18:22,808 - __main__ - INFO - 處理 Netlist 檔案: ..\tests\data\sample_netlist.net
+2025-07-28 15:18:22,808 - __main__ - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-28 15:18:22,810 - core.netlist_parser - INFO - Extracted 20 net names from ..\tests\data\sample_netlist.net
+2025-07-28 15:18:22,810 - __main__ - INFO - 提取到 20 個網路名稱
+2025-07-28 15:18:22,810 - __main__ - INFO - 步驟 2: 分類網路名稱
+2025-07-28 15:18:22,812 - core.net_classifier - INFO - Classified 20 nets
+2025-07-28 15:18:22,812 - __main__ - INFO -   Other: 2 個網路
+2025-07-28 15:18:22,812 - __main__ - INFO -   Communication Interface: 8 個網路
+2025-07-28 15:18:22,812 - __main__ - INFO -   RF: 8 個網路
+2025-07-28 15:18:22,813 - __main__ - INFO -   Power: 2 個網路
+2025-07-28 15:18:22,813 - __main__ - INFO - 步驟 3: 應用佈局規則
+2025-07-28 15:18:22,813 - core.rule_engine - INFO - Applied layout rules to 20 nets
+2025-07-28 15:18:22,813 - __main__ - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-28 15:18:23,322 - core.template_mapper - INFO - Successfully mapped 20 nets to Excel template: manual_test_output.xlsx
+2025-07-28 15:18:23,323 - __main__ - INFO - === 處理完成! 輸出檔案: manual_test_output.xlsx ===
