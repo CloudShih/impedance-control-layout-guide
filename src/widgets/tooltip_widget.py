@@ -3,9 +3,9 @@ Custom tooltip widget with enhanced functionality
 增強功能的自定義工具提示元件
 """
 
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QGraphicsDropShadowEffect
 from PyQt5.QtCore import QTimer, QPoint, Qt, pyqtSignal
-from PyQt5.QtGui import QPalette, QFont
+from PyQt5.QtGui import QPalette, QFont, QColor
 import typing
 
 
@@ -40,11 +40,11 @@ class ToolTipWidget(QWidget):
     
     def init_ui(self):
         """Initialize the tooltip UI"""
-        self.setFixedWidth(300)
+        self.setFixedWidth(320)
         
         # Main layout
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(8, 6, 8, 6)
+        layout.setContentsMargins(12, 10, 12, 10)
         
         # Content label
         self.content_label = QLabel()
@@ -53,25 +53,99 @@ class ToolTipWidget(QWidget):
         
         # Set font
         font = QFont()
+        font.setFamily("Microsoft YaHei")
         font.setPointSize(9)
         self.content_label.setFont(font)
         
         layout.addWidget(self.content_label)
         
-        # Apply styling
-        self.setStyleSheet("""
-            ToolTipWidget {
-                background-color: #3c3c3c;
-                border: 1px solid #555555;
-                border-radius: 6px;
-                color: #f0f0f0;
-            }
-            QLabel {
-                background-color: transparent;
-                color: #f0f0f0;
-                padding: 4px;
-            }
-        """)
+        # Apply enhanced styling with better background and shadow effect
+        self.apply_theme_style()
+        
+        # Add drop shadow effect
+        self.add_shadow_effect()
+    
+    def apply_theme_style(self, theme='dark'):
+        """Apply theme-based styling to the tooltip"""
+        if theme == 'dark':
+            # Dark theme with high contrast
+            style = """
+                ToolTipWidget {
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #505050, stop:1 #404040);
+                    border: 2px solid #707070;
+                    border-radius: 10px;
+                    color: #ffffff;
+                }
+                QLabel {
+                    background-color: transparent;
+                    color: #ffffff;
+                    padding: 8px;
+                    line-height: 1.5;
+                }
+            """
+        elif theme == 'light':
+            # Light theme for better contrast
+            style = """
+                ToolTipWidget {
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #f8f8f8, stop:1 #e8e8e8);
+                    border: 2px solid #cccccc;
+                    border-radius: 10px;
+                    color: #333333;
+                }
+                QLabel {
+                    background-color: transparent;
+                    color: #333333;
+                    padding: 8px;
+                    line-height: 1.5;
+                }
+            """
+        elif theme == 'blue':
+            # Blue accent theme
+            style = """
+                ToolTipWidget {
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #4a90e2, stop:1 #357abd);
+                    border: 2px solid #5ba0f2;
+                    border-radius: 10px;
+                    color: #ffffff;
+                }
+                QLabel {
+                    background-color: transparent;
+                    color: #ffffff;
+                    padding: 8px;
+                    line-height: 1.5;
+                }
+            """
+        else:
+            # Default dark theme
+            style = """
+                ToolTipWidget {
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #505050, stop:1 #404040);
+                    border: 2px solid #707070;
+                    border-radius: 10px;
+                    color: #ffffff;
+                }
+                QLabel {
+                    background-color: transparent;
+                    color: #ffffff;
+                    padding: 8px;
+                    line-height: 1.5;
+                }
+            """
+        
+        self.setStyleSheet(style)
+    
+    def add_shadow_effect(self):
+        """Add drop shadow effect to the tooltip"""
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(15)  # 陰影模糊半徑
+        shadow.setXOffset(3)      # 水平偏移
+        shadow.setYOffset(3)      # 垂直偏移
+        shadow.setColor(QColor(0, 0, 0, 150))  # 陰影顏色（黑色，透明度150）
+        self.setGraphicsEffect(shadow)
     
     def set_tooltip_for_widget(self, widget: QWidget, text: str, show_delay: int = 500):
         """
@@ -103,10 +177,10 @@ class ToolTipWidget(QWidget):
             self.show_timer.start(self.show_delay)
     
     def on_leave(self):
-        """Handle mouse leave event"""
+        """Handle mouse leave event with fade-out"""
         self.show_timer.stop()
         self.hide_timer.stop()
-        self.hide()
+        self.start_fade_out()
     
     def update_position(self, global_pos: QPoint):
         """Update tooltip position"""
@@ -132,22 +206,71 @@ class ToolTipWidget(QWidget):
         self.move(x, y)
     
     def show_tooltip(self):
-        """Show the tooltip"""
+        """Show the tooltip with enhanced visual effects"""
         if not self.tooltip_text:
             return
         
-        # Set content
-        self.content_label.setText(self.tooltip_text)
+        # Set content with improved HTML formatting
+        formatted_text = self.format_tooltip_text(self.tooltip_text)
+        self.content_label.setText(formatted_text)
         
-        # Adjust size based on content
+        # Adjust size based on content with minimum dimensions
         self.adjustSize()
         
-        # Show tooltip
+        # Ensure minimum size for better appearance
+        min_height = max(80, self.height())
+        self.setMinimumHeight(min_height)
+        
+        # Show tooltip with fade-in effect
+        self.setWindowOpacity(0.0)
         self.show()
         self.raise_()
         
+        # Simple fade-in animation using timer
+        self.fade_timer = QTimer()
+        self.fade_timer.timeout.connect(self.fade_in_step)
+        self.fade_opacity = 0.0
+        self.fade_timer.start(20)  # 20ms intervals for smooth animation
+        
         # Start auto-hide timer
         self.hide_timer.start(self.hide_delay)
+    
+    def format_tooltip_text(self, text: str) -> str:
+        """Format tooltip text with enhanced styling"""
+        # Add consistent styling to HTML content
+        styled_text = f"""
+        <div style="font-family: Microsoft YaHei; line-height: 1.5;">
+            {text}
+        </div>
+        """
+        return styled_text
+    
+    def fade_in_step(self):
+        """Perform fade-in animation step"""
+        self.fade_opacity += 0.1
+        if self.fade_opacity >= 0.95:
+            self.fade_opacity = 0.95
+            self.fade_timer.stop()
+        self.setWindowOpacity(self.fade_opacity)
+    
+    def start_fade_out(self):
+        """Start fade-out animation"""
+        if hasattr(self, 'fade_timer') and self.fade_timer.isActive():
+            self.fade_timer.stop()
+        
+        self.fade_out_timer = QTimer()
+        self.fade_out_timer.timeout.connect(self.fade_out_step)
+        self.fade_out_opacity = self.windowOpacity()
+        self.fade_out_timer.start(20)  # 20ms intervals for smooth animation
+    
+    def fade_out_step(self):
+        """Perform fade-out animation step"""
+        self.fade_out_opacity -= 0.15
+        if self.fade_out_opacity <= 0.0:
+            self.fade_out_opacity = 0.0
+            self.fade_out_timer.stop()
+            self.hide()
+        self.setWindowOpacity(self.fade_out_opacity)
     
     def set_content(self, text: str):
         """Set tooltip content"""
@@ -164,9 +287,10 @@ class TooltipManager:
         self.tooltips = {}
         self.current_tooltip = None
     
-    def add_tooltip(self, widget: QWidget, text: str, show_delay: int = 500):
+    def add_tooltip(self, widget: QWidget, text: str, show_delay: int = 500, theme: str = 'dark'):
         """Add tooltip to a widget"""
         tooltip = ToolTipWidget()
+        tooltip.apply_theme_style(theme)  # Apply theme before setting up
         tooltip.set_tooltip_for_widget(widget, text, show_delay)
         self.tooltips[widget] = tooltip
     
@@ -190,7 +314,7 @@ class TooltipManager:
 _tooltip_manager = TooltipManager()
 
 
-def add_tooltip(widget: QWidget, text: str, show_delay: int = 500):
+def add_tooltip(widget: QWidget, text: str, show_delay: int = 500, theme: str = 'dark'):
     """
     Convenience function to add tooltip to any widget
     為任何元件添加工具提示的便利函數
@@ -199,8 +323,9 @@ def add_tooltip(widget: QWidget, text: str, show_delay: int = 500):
         widget: Target widget
         text: Tooltip text (supports HTML formatting)
         show_delay: Delay in milliseconds before showing (default: 500ms)
+        theme: Visual theme ('dark', 'light', 'blue')
     """
-    _tooltip_manager.add_tooltip(widget, text, show_delay)
+    _tooltip_manager.add_tooltip(widget, text, show_delay, theme)
 
 
 def remove_tooltip(widget: QWidget):
