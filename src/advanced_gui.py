@@ -20,12 +20,12 @@ from .controllers.signal_rule_controller import SignalRuleController
 from .controllers.layout_rule_controller import LayoutRuleController
 from .controllers.template_mapping_controller import TemplateMappingController
 
-# Import view widgets (will be created next)
+# Import view widgets
 from .views.signal_rule_editor import SignalRuleEditor
 from .views.layout_rule_editor import LayoutRuleEditor
 from .views.template_mapping_editor import TemplateMappingEditor
-from .views.configuration_overview import ConfigurationOverview
 from .views.netlist_processor import NetlistProcessor
+from .widgets.help_panel import HelpPanel
 
 
 class AdvancedImpedanceControlGUI(QMainWindow):
@@ -193,12 +193,10 @@ class AdvancedImpedanceControlGUI(QMainWindow):
         splitter = QSplitter(Qt.Horizontal)
         main_layout.addWidget(splitter)
         
-        # Configuration overview (left panel)
-        self.overview_widget = ConfigurationOverview(
-            self.config_model,
-            self.config_controller
-        )
-        splitter.addWidget(self.overview_widget)
+        # Help panel (left panel)
+        self.help_panel = HelpPanel()
+        self.help_panel.navigateToTab.connect(self.handle_navigation_request)
+        splitter.addWidget(self.help_panel)
         
         # Main tab widget (right panel)
         self.tab_widget = QTabWidget()
@@ -206,6 +204,9 @@ class AdvancedImpedanceControlGUI(QMainWindow):
         
         # Create editor tabs
         self.create_editor_tabs()
+        
+        # Connect tab change signal
+        self.tab_widget.currentChanged.connect(self.on_tab_changed)
         
         # Set splitter proportions
         splitter.setSizes([300, 1100])
@@ -395,6 +396,25 @@ class AdvancedImpedanceControlGUI(QMainWindow):
                 event.ignore()
         else:
             event.accept()
+    
+    def on_tab_changed(self, index):
+        """Handle tab change to update help panel"""
+        if index >= 0:
+            tab_name = self.tab_widget.tabText(index)
+            self.help_panel.set_context_from_tab(tab_name)
+    
+    def handle_navigation_request(self, target):
+        """Handle navigation requests from help panel"""
+        if target == "load_config":
+            self.config_controller.load_config_file()
+        elif target == "validate_config":
+            self.config_controller.validate_all_rules()
+        else:
+            # Navigate to specific tab
+            for i in range(self.tab_widget.count()):
+                if self.tab_widget.tabText(i) == target:
+                    self.tab_widget.setCurrentIndex(i)
+                    break
     
     def apply_dark_theme(self):
         """Apply dark theme to the application"""

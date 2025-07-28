@@ -13,6 +13,7 @@ from PyQt5.QtCore import Qt
 
 from ..models.signal_rule_model import SignalRuleModel
 from ..controllers.signal_rule_controller import SignalRuleController
+from ..widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
 
 
 class SignalRuleEditor(QWidget):
@@ -100,6 +101,7 @@ class SignalRuleEditor(QWidget):
         name_layout = QHBoxLayout()
         name_layout.addWidget(QLabel("規則名稱:"))
         self.name_edit = QLineEdit()
+        add_tooltip(self.name_edit, TOOLTIP_TEXTS['signal_rule_name'])
         name_layout.addWidget(self.name_edit)
         basic_layout.addLayout(name_layout)
         
@@ -112,6 +114,7 @@ class SignalRuleEditor(QWidget):
             "Communication Interface", "High Speed Interface", 
             "RF", "Power", "Clock", "General"
         ])
+        add_tooltip(self.category_combo, TOOLTIP_TEXTS['signal_category'])
         cat_layout.addWidget(self.category_combo)
         
         cat_layout.addWidget(QLabel("信號類型:"))
@@ -121,6 +124,7 @@ class SignalRuleEditor(QWidget):
             "Single-End", "Differential", "I2C", "SPI", 
             "Power", "Clock", "RF"
         ])
+        add_tooltip(self.signal_type_combo, TOOLTIP_TEXTS['signal_type'])
         cat_layout.addWidget(self.signal_type_combo)
         basic_layout.addLayout(cat_layout)
         
@@ -130,6 +134,7 @@ class SignalRuleEditor(QWidget):
         self.priority_spin = QSpinBox()
         self.priority_spin.setRange(0, 100)
         self.priority_spin.setValue(10)
+        add_tooltip(self.priority_spin, TOOLTIP_TEXTS['signal_priority'])
         priority_layout.addWidget(self.priority_spin)
         
         self.enabled_check = QCheckBox("啟用此規則")
@@ -147,12 +152,14 @@ class SignalRuleEditor(QWidget):
         # Keywords
         criteria_layout.addWidget(QLabel("關鍵字 (用逗號分隔):"))
         self.keywords_edit = QLineEdit()
+        add_tooltip(self.keywords_edit, TOOLTIP_TEXTS['signal_keywords'])
         criteria_layout.addWidget(self.keywords_edit)
         
         # Patterns
         criteria_layout.addWidget(QLabel("正則表達式模式 (每行一個):"))
         self.patterns_edit = QTextEdit()
         self.patterns_edit.setMaximumHeight(100)
+        add_tooltip(self.patterns_edit, TOOLTIP_TEXTS['signal_patterns'])
         criteria_layout.addWidget(self.patterns_edit)
         
         layout.addWidget(criteria_group)
@@ -162,6 +169,7 @@ class SignalRuleEditor(QWidget):
         desc_layout = QVBoxLayout(desc_group)
         self.description_edit = QTextEdit()
         self.description_edit.setMaximumHeight(80)
+        add_tooltip(self.description_edit, TOOLTIP_TEXTS['signal_description'])
         desc_layout.addWidget(self.description_edit)
         layout.addWidget(desc_group)
         

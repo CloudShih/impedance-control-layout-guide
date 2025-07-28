@@ -13,6 +13,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 
 from ..models.configuration_model import ConfigurationModel
 from ..controllers.configuration_controller import ConfigurationController
+from ..widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
 
 # Import the main processing function
 sys.path.append(str(Path(__file__).parent.parent))
@@ -85,6 +86,7 @@ class NetlistProcessor(QWidget):
         
         self.netlist_input = QLineEdit()
         self.netlist_input.setPlaceholderText("選擇 Netlist 檔案 (.net, .sp, .cir, .txt)")
+        add_tooltip(self.netlist_input, TOOLTIP_TEXTS['netlist_input_file'])
         netlist_layout.addWidget(self.netlist_input)
         
         self.browse_netlist_btn = QPushButton("瀏覽...")
@@ -99,6 +101,7 @@ class NetlistProcessor(QWidget):
         
         self.output_input = QLineEdit()
         self.output_input.setPlaceholderText("選擇輸出 Excel 檔案位置")
+        add_tooltip(self.output_input, TOOLTIP_TEXTS['netlist_output_file'])
         output_layout.addWidget(self.output_input)
         
         self.browse_output_btn = QPushButton("另存為...")
