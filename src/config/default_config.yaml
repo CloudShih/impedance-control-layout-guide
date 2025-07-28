@@ -1,0 +1,239 @@
+# Default configuration for Impedance Control Layout Guide Generator
+# 阻抗控制佈局指南生成器的預設配置
+
+app_info:
+  name: "Impedance Control Layout Guide Generator"
+  version: "2.0.0"
+  description: "智能阻抗控制佈局指南生成工具"
+
+# Netlist Parser Configuration
+# Netlist 解析器配置
+netlist_parser:
+  supported_formats: [".net", ".sp", ".cir", ".txt"]
+  excluded_patterns:
+    - "^[a-zA-Z][0-9]+$"      # Component references like R123, C45
+    - "^[0-9]+$"              # Pure numbers  
+    - "^[0-9]+(ohm|f|h)$"     # Values like 10ohm, 22f, 1h
+  encoding: "utf-8"
+  skip_comments: true
+  comment_prefixes: ["*", "#", "//"]
+
+# Net Classification Rules
+# 網路分類規則
+net_classification_rules:
+  I2C:
+    keywords: ["I2C", "SCL", "SDA", "ADR"]
+    patterns: 
+      - ".*I2C.*"
+      - ".*SCL.*" 
+      - ".*SDA.*"
+      - ".*ADR.*"
+    exact_matches: []
+    category: "Communication Interface"
+    signal_type: "I2C"
+    priority: 10
+    
+  SPI:
+    keywords: ["SPI", "CSB", "MI", "MO", "SCLK", "MOSI", "MISO"]
+    patterns:
+      - ".*SPI.*"
+      - ".*CSB.*"
+      - ".*MI.*"
+      - ".*MO.*"
+      - ".*SCLK.*"
+      - ".*MOSI.*"
+      - ".*MISO.*"
+    exact_matches: []
+    category: "Communication Interface"
+    signal_type: "SPI"
+    priority: 10
+    
+  RF:
+    keywords: ["RF", "ANT", "RX", "TX"]
+    patterns:
+      - ".*RF.*"
+      - ".*ANT.*"
+      - ".*RX.*"
+      - ".*TX.*"
+      - ".*ANTENNA.*"
+    exact_matches: []
+    category: "RF"
+    signal_type: "Single-End"
+    priority: 20
+    
+  PCIe:
+    keywords: ["PCIE", "PCIe"]
+    patterns:
+      - ".*PCIE.*"
+      - ".*PCIe.*"
+    exact_matches: []
+    category: "High Speed Interface"
+    signal_type: "Differential"
+    priority: 15
+    
+  USB:
+    keywords: ["USB", "DP", "DM"]
+    patterns:
+      - ".*USB.*"
+      - ".*DP.*"
+      - ".*DM.*"
+    exact_matches: []
+    category: "High Speed Interface"
+    signal_type: "Differential"
+    priority: 15
+    
+  Power:
+    keywords: ["VDD", "VCC", "POWER", "GND", "VBAT"]
+    patterns:
+      - ".*VDD.*"
+      - ".*VCC.*"
+      - ".*POWER.*"
+      - ".*GND.*"
+      - ".*VBAT.*"
+    exact_matches: []
+    category: "Power"
+    signal_type: "Power"
+    priority: 5
+    
+  Clock:
+    keywords: ["CLK", "CLOCK", "OSC"]
+    patterns:
+      - ".*CLK.*"
+      - ".*CLOCK.*"
+      - ".*OSC.*"
+    exact_matches: []
+    category: "Clock"
+    signal_type: "Clock"
+    priority: 12
+
+# Layout Rules Configuration
+# 佈局規則配置
+layout_rules:
+  I2C:
+    impedance: "50 Ohm"
+    description: "I2C/I3C應用: AP-I2C和SCP-I2C來自不同的IP，因此請勿將AP/SCP設備連接到同一個I2C總線。I2C0~I2C9具有內部上拉電阻（軟體預設1KΩ，硬體預設10KΩ，也支援3KΩ），因此不需要外部上拉電阻。對於I2C標準模式、快速模式和快速模式增強版，建議將I/O類型配置為開漏（內部上拉1KΩ）。對於高速模式，建議使用推挽式(Push-pull)類型。為提高訊號品質，在SDA線路中串聯一個電阻將有助於改善過衝或下衝。"
+    width: "5 mil"
+    length_limit: "6 inch"
+    spacing: "3W spacing"
+    via_rules: "Minimize vias"
+    layer_stack: "Any signal layer"
+    shielding: "Ground guard preferred"
+    notes: "避免AP和SCP設備共用同一總線"
+    
+  SPI:
+    impedance: "50 Ohm"
+    description: "SPI總線的所有走線應在同一層中由附近的接地走線良好屏蔽。這些走線還應該被n-1和n+1層中的接地走線包圍，並且彼此靠近。SPI總線的所有走線應遠離噪聲源，例如Buck開關節點等。對於PMIC SPI總線，也適用類似的屏蔽要求。PMIC SPI走線應遠離VBUS（插入式尖峰）和Buck開關節點等噪聲源。SOC和PMIC之間的SPI總線的最大長度應短於6英寸（考慮6英寸約等於1納秒的延遲）。"
+    width: "5 mil"
+    length_limit: "6 inch"
+    spacing: "3W spacing"
+    via_rules: "Minimize vias"
+    layer_stack: "Same layer for all signals"
+    shielding: "Ground shielding required"
+    notes: "遠離開關噪聲源，保持良好屏蔽"
+    
+  RF:
+    impedance: "50 Ohm"
+    description: "RF信號需要被接地層包圍，每條走線都應該被接地層良好包圍。"
+    width: "Calculated for 50 Ohm"
+    length_limit: "Minimize length"
+    spacing: "5W spacing minimum"
+    via_rules: "Minimize vias, use blind/buried vias"
+    layer_stack: "Dedicated RF layers"
+    shielding: "Ground surrounding required"
+    notes: "最小化過孔和尖銳彎曲，保持阻抗連續性"
+    
+  PCIe:
+    impedance: "100 Ohm differential"
+    description: "PCIe差分信號需要嚴格的阻抗控制和長度匹配。"
+    width: "Calculated for 100 Ohm diff"
+    length_limit: "Length matching ±0.1mm"
+    spacing: "Differential pair rules"
+    via_rules: "Minimize vias, maintain differential impedance"
+    layer_stack: "Stripline preferred"
+    shielding: "Ground plane required"
+    notes: "維持差分阻抗和長度匹配"
+    
+  USB:
+    impedance: "90 Ohm differential"
+    description: "USB差分信號需要90歐姆差分阻抗控制。"
+    width: "Calculated for 90 Ohm diff"
+    length_limit: "Length matching ±0.1mm"
+    spacing: "Differential pair rules"
+    via_rules: "Minimize vias"
+    layer_stack: "Stripline preferred"
+    shielding: "Ground plane required"
+    notes: "維持90歐姆差分阻抗"
+    
+  Power:
+    impedance: "N/A"
+    description: "電源線需要足夠的銅厚度以承載電流，並保持低阻抗。"
+    width: "Current carrying capacity"
+    length_limit: "Minimize resistance"
+    spacing: "Voltage clearance"
+    via_rules: "Multiple vias for current sharing"
+    layer_stack: "Power/Ground planes"
+    shielding: "Not required"
+    notes: "考慮電流密度和電壓降"
+    
+  Clock:
+    impedance: "50 Ohm"
+    description: "時鐘信號需要良好的阻抗控制和低抖動設計。"
+    width: "5 mil"
+    length_limit: "Minimize length"
+    spacing: "5W spacing"
+    via_rules: "Minimize vias"
+    layer_stack: "Dedicated clock layer"
+    shielding: "Ground guard recommended"
+    notes: "避免串擾，保持信號完整性"
+    
+  Default:
+    impedance: "50 Ohm"
+    description: "一般信號線，50歐姆阻抗控制。"
+    width: "5 mil"
+    length_limit: "No specific limit"
+    spacing: "3W spacing"
+    via_rules: "Standard via rules"
+    layer_stack: "Any signal layer"
+    shielding: "Optional"
+    notes: "標準數位信號繞線"
+
+# Template Mapping Configuration
+# 模板映射配置
+template_mapping:
+  columns:
+    Category: "Category"
+    Net_Name: "Net Name"
+    Pin: "Pin (MT7921)"
+    Description: "Description"
+    Impedance: "Impedance"
+    Type: "Type"
+    Width: "Width"
+    Length_Limit: "Length Limit (mil)"
+    Spacing: "Spacing"
+    Shielding: "Shielding"
+    Layer_Stack: "Layer Stack"
+    Notes: "Notes"
+  
+  output_settings:
+    sheet_name: "Layout Guide"
+    auto_filter: true
+    freeze_panes: "A2"
+    column_width_auto: true
+    header_formatting: true
+
+# UI Configuration
+# 使用者界面配置
+ui_settings:
+  window_title: "阻抗控制佈局指南生成器 v2.0"
+  window_size: [1000, 600]
+  theme: "dark"
+  language: "zh_TW"
+  
+# Logging Configuration
+# 日誌配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_output: true
+  console_output: true
+  log_file_path: "logs/impedance_tool.log"

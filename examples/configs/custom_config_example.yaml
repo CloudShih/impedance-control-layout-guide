@@ -1,0 +1,56 @@
+# Example custom configuration file
+# 自定義配置檔案範例
+
+app_info:
+  name: "Custom Impedance Control Tool"
+  version: "2.0.0-custom"
+  description: "客製化阻抗控制工具"
+
+# Custom Net Classification Rules
+# 自定義網路分類規則
+net_classification_rules:
+  UART:
+    keywords: ["UART", "RX", "TX", "RTS", "CTS"]
+    patterns: 
+      - ".*UART.*"
+      - ".*RX.*"
+      - ".*TX.*"
+    category: "Communication Interface"
+    signal_type: "UART"
+    priority: 25
+    
+  CAN:
+    keywords: ["CAN", "CANH", "CANL"]
+    patterns:
+      - ".*CAN.*"
+    category: "Automotive Interface"
+    signal_type: "Differential"
+    priority: 30
+
+# Custom Layout Rules
+# 自定義佈局規則
+layout_rules:
+  UART:
+    impedance: "50 Ohm"
+    description: "UART通訊信號需要適當的阻抗控制以保證信號品質。"
+    width: "5 mil"
+    length_limit: "12 inch"
+    spacing: "3W spacing"
+    shielding: "Optional"
+    notes: "保持串列通訊品質"
+    
+  CAN:
+    impedance: "120 Ohm differential"
+    description: "CAN匯流排需要120歐姆差分阻抗和終端電阻。"
+    width: "Calculated for 120 Ohm diff"
+    length_limit: "No specific limit"
+    spacing: "Differential pair rules"
+    shielding: "Twisted pair preferred"
+    notes: "需要120歐姆終端電阻"
+
+# Override UI settings
+# 覆蓋使用者界面設定
+ui_settings:
+  window_title: "客製化阻抗控制工具"
+  theme: "light"
+  language: "zh_TW"
