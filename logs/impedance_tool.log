@@ -1,0 +1,16 @@
+2025-07-28 15:54:31,736 - main - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-28 15:54:31,736 - main - INFO - 處理 Netlist 檔案: tests\data\sample_netlist.net
+2025-07-28 15:54:31,736 - main - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-28 15:54:31,740 - core.netlist_parser - INFO - Extracted 20 net names from tests\data\sample_netlist.net
+2025-07-28 15:54:31,740 - main - INFO - 提取到 20 個網路名稱
+2025-07-28 15:54:31,740 - main - INFO - 步驟 2: 分類網路名稱
+2025-07-28 15:54:31,741 - core.net_classifier - INFO - Classified 20 nets
+2025-07-28 15:54:31,741 - main - INFO -   Other: 2 個網路
+2025-07-28 15:54:31,742 - main - INFO -   Communication Interface: 8 個網路
+2025-07-28 15:54:31,742 - main - INFO -   RF: 8 個網路
+2025-07-28 15:54:31,742 - main - INFO -   Power: 2 個網路
+2025-07-28 15:54:31,742 - main - INFO - 步驟 3: 應用佈局規則
+2025-07-28 15:54:31,742 - core.rule_engine - INFO - Applied layout rules to 20 nets
+2025-07-28 15:54:31,742 - main - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-28 15:54:34,358 - core.template_mapper - INFO - Successfully mapped 20 nets to Excel template: quick_test_output.xlsx
+2025-07-28 15:54:34,358 - main - INFO - === 處理完成! 輸出檔案: quick_test_output.xlsx ===

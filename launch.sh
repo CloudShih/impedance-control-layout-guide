@@ -24,22 +24,7 @@ $PYTHON_CMD -m pip install pandas openpyxl pyyaml PyQt5 > /dev/null 2>&1
 
 # Test basic functionality
 echo "Testing core functionality..."
-cd src
-$PYTHON_CMD -c "
-import sys
-sys.path.insert(0, '.')
-from main import process_netlist_to_excel
-from pathlib import Path
-try:
-    result = process_netlist_to_excel(
-        netlist_path=Path('../tests/data/sample_netlist.net'),
-        output_path=Path('../test_output.xlsx')
-    )
-    print(f'SUCCESS: Generated {result}')
-except Exception as e:
-    print(f'ERROR: {e}')
-    sys.exit(1)
-"
+$PYTHON_CMD test_tool.py
 
 if [ $? -eq 0 ]; then
     echo

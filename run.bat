@@ -15,7 +15,7 @@ echo Installing packages...
 pip install pandas openpyxl pyyaml
 
 echo Running test...
-python test_integration.py
+python test_tool.py
 if errorlevel 1 (
     echo TEST FAILED - Please check environment
     pause
