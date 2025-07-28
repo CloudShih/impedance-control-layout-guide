@@ -93,3 +93,33 @@
 2025-07-28 15:43:24,801 - main - INFO - 步驟 4: 生成 Excel 檔案
 2025-07-28 15:43:25,298 - core.template_mapper - INFO - Successfully mapped 20 nets to Excel template: ..\test_output.xlsx
 2025-07-28 15:43:25,298 - main - INFO - === 處理完成! 輸出檔案: ..\test_output.xlsx ===
+2025-07-28 16:06:06,858 - __main__ - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-28 16:06:06,859 - __main__ - INFO - 處理 Netlist 檔案: D:\ClaudeCode\projects\impedenceControll\AN2_SUB_BOARD_FOR_NFC_20250725.NET
+2025-07-28 16:06:06,859 - __main__ - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-28 16:06:06,866 - core.netlist_parser - INFO - Extracted 22 net names from D:\ClaudeCode\projects\impedenceControll\AN2_SUB_BOARD_FOR_NFC_20250725.NET
+2025-07-28 16:06:06,867 - __main__ - INFO - 提取到 22 個網路名稱
+2025-07-28 16:06:06,867 - __main__ - INFO - 步驟 2: 分類網路名稱
+2025-07-28 16:06:06,869 - core.net_classifier - INFO - Classified 22 nets
+2025-07-28 16:06:06,869 - __main__ - INFO -   Communication Interface: 8 個網路
+2025-07-28 16:06:06,869 - __main__ - INFO -   RF: 12 個網路
+2025-07-28 16:06:06,869 - __main__ - INFO -   Clock: 2 個網路
+2025-07-28 16:06:06,869 - __main__ - INFO - 步驟 3: 應用佈局規則
+2025-07-28 16:06:06,869 - core.rule_engine - INFO - Applied layout rules to 22 nets
+2025-07-28 16:06:06,869 - __main__ - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-28 16:06:07,908 - core.template_mapper - INFO - Successfully mapped 22 nets to Excel template: verfication.xlsx
+2025-07-28 16:06:07,909 - __main__ - INFO - === 處理完成! 輸出檔案: verfication.xlsx ===
+2025-07-28 16:08:22,312 - main - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-28 16:08:22,313 - main - INFO - 處理 Netlist 檔案: D:\ClaudeCode\projects\impedenceControll\AN2_SUB_BOARD_FOR_NFC_20250725.NET
+2025-07-28 16:08:22,313 - main - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-28 16:08:22,315 - core.netlist_parser - INFO - Extracted 22 net names from D:\ClaudeCode\projects\impedenceControll\AN2_SUB_BOARD_FOR_NFC_20250725.NET
+2025-07-28 16:08:22,315 - main - INFO - 提取到 22 個網路名稱
+2025-07-28 16:08:22,315 - main - INFO - 步驟 2: 分類網路名稱
+2025-07-28 16:08:22,316 - core.net_classifier - INFO - Classified 22 nets
+2025-07-28 16:08:22,317 - main - INFO -   Communication Interface: 8 個網路
+2025-07-28 16:08:22,317 - main - INFO -   RF: 12 個網路
+2025-07-28 16:08:22,317 - main - INFO -   Clock: 2 個網路
+2025-07-28 16:08:22,317 - main - INFO - 步驟 3: 應用佈局規則
+2025-07-28 16:08:22,317 - core.rule_engine - INFO - Applied layout rules to 22 nets
+2025-07-28 16:08:22,317 - main - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-28 16:08:22,835 - core.template_mapper - INFO - Successfully mapped 22 nets to Excel template: D:\ClaudeCode\projects\impedenceControll\verfication.xlsx
+2025-07-28 16:08:22,835 - main - INFO - === 處理完成! 輸出檔案: D:\ClaudeCode\projects\impedenceControll\verfication.xlsx ===
