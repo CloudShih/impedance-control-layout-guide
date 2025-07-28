@@ -53,7 +53,7 @@ class TemplateMapper:
             df = pd.DataFrame(df_data)
             
             # Sort by priority and then by net name
-            df = df.sort_values(['priority', 'net_name'])
+            df = df.sort_values(['priority', 'Net Name'])
             
             # Reorder columns according to template mapping
             df = self._reorder_columns(df)

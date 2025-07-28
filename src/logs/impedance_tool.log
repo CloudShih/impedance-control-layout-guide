@@ -1,0 +1,31 @@
+2025-07-28 13:54:57,470 - main - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-28 13:54:57,470 - main - INFO - 處理 Netlist 檔案: ..\tests\data\sample_netlist.net
+2025-07-28 13:54:57,470 - main - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-28 13:54:57,474 - core.netlist_parser - INFO - Extracted 20 net names from ..\tests\data\sample_netlist.net
+2025-07-28 13:54:57,474 - main - INFO - 提取到 20 個網路名稱
+2025-07-28 13:54:57,474 - main - INFO - 步驟 2: 分類網路名稱
+2025-07-28 13:54:57,476 - core.net_classifier - INFO - Classified 20 nets
+2025-07-28 13:54:57,476 - main - INFO -   Other: 2 個網路
+2025-07-28 13:54:57,476 - main - INFO -   Communication Interface: 8 個網路
+2025-07-28 13:54:57,476 - main - INFO -   RF: 8 個網路
+2025-07-28 13:54:57,476 - main - INFO -   Power: 2 個網路
+2025-07-28 13:54:57,476 - main - INFO - 步驟 3: 應用佈局規則
+2025-07-28 13:54:57,476 - core.rule_engine - INFO - Applied layout rules to 20 nets
+2025-07-28 13:54:57,476 - main - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-28 13:54:57,478 - main - ERROR - 處理過程中發生錯誤: Failed to map data to template: 'net_name'
+2025-07-28 13:55:19,057 - main - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-28 13:55:19,057 - main - INFO - 處理 Netlist 檔案: ..\tests\data\sample_netlist.net
+2025-07-28 13:55:19,058 - main - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-28 13:55:19,060 - core.netlist_parser - INFO - Extracted 20 net names from ..\tests\data\sample_netlist.net
+2025-07-28 13:55:19,060 - main - INFO - 提取到 20 個網路名稱
+2025-07-28 13:55:19,060 - main - INFO - 步驟 2: 分類網路名稱
+2025-07-28 13:55:19,061 - core.net_classifier - INFO - Classified 20 nets
+2025-07-28 13:55:19,061 - main - INFO -   Other: 2 個網路
+2025-07-28 13:55:19,061 - main - INFO -   Communication Interface: 8 個網路
+2025-07-28 13:55:19,061 - main - INFO -   RF: 8 個網路
+2025-07-28 13:55:19,062 - main - INFO -   Power: 2 個網路
+2025-07-28 13:55:19,062 - main - INFO - 步驟 3: 應用佈局規則
+2025-07-28 13:55:19,062 - core.rule_engine - INFO - Applied layout rules to 20 nets
+2025-07-28 13:55:19,062 - main - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-28 13:55:20,168 - core.template_mapper - INFO - Successfully mapped 20 nets to Excel template: ..\test_output.xlsx
+2025-07-28 13:55:20,168 - main - INFO - === 處理完成! 輸出檔案: ..\test_output.xlsx ===
