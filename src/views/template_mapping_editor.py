@@ -171,13 +171,18 @@ class TemplateMappingEditor(QWidget):
         self.column_table.setColumnCount(4)
         self.column_table.setHorizontalHeaderLabels(["內部名稱", "顯示名稱", "可見", "順序"])
         
-        # Set column widths
+        # Set column widths and header styles
         header = self.column_table.horizontalHeader()
         header.resizeSection(0, 150)
         header.resizeSection(1, 200)
         header.resizeSection(2, 80)
         header.resizeSection(3, 80)
         header.setStretchLastSection(False)
+        header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; font-weight: bold; border: 1px solid #555555; padding: 4px; }")
+        
+        # Set vertical header (row numbers) style
+        v_header = self.column_table.verticalHeader()
+        v_header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; border: 1px solid #555555; }")
         
         self.column_table.setSelectionBehavior(QTableWidget.SelectRows)
         add_tooltip(self.column_table, "管理Excel輸出的欄位映射關係")
@@ -591,6 +596,13 @@ class TemplateMappingEditor(QWidget):
                 item = QTableWidgetItem(str(value))
                 item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # Read-only
                 self.preview_table.setItem(row, col, item)
+        
+        # Set preview table header styles
+        preview_header = self.preview_table.horizontalHeader()
+        preview_header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; font-weight: bold; border: 1px solid #555555; padding: 4px; }")
+        
+        preview_v_header = self.preview_table.verticalHeader()
+        preview_v_header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; border: 1px solid #555555; }")
         
         # Auto-resize columns
         self.preview_table.resizeColumnsToContents()
