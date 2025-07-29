@@ -59,8 +59,8 @@ class LayoutRuleEditor(QWidget):
         # Rule editor (right panel)
         self.create_rule_editor_panel(splitter)
         
-        # Set splitter proportions
-        splitter.setSizes([400, 800])
+        # Set splitter proportions - increased width by 50%
+        splitter.setSizes([600, 1200])
     
     def create_rules_list_panel(self, parent):
         """Create the rules list panel"""
