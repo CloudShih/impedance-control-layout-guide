@@ -53,8 +53,8 @@ class SignalRuleEditor(QWidget):
         # Rule editor (right panel)
         self.create_rule_editor_panel(splitter)
         
-        # Set splitter proportions - increased width by 50%
-        splitter.setSizes([600, 1200])
+        # Set splitter proportions - decreased width by 50%
+        splitter.setSizes([200, 400])
     
     def create_rules_list_panel(self, parent):
         """Create the rules list panel"""
