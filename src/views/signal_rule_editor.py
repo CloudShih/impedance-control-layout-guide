@@ -74,17 +74,12 @@ class SignalRuleEditor(QWidget):
         self.rules_table.setColumnCount(4)
         self.rules_table.setHorizontalHeaderLabels(["規則名稱", "類別", "信號類型", "優先級"])
         
-        # Set header styles
+        # Set header styles - simple approach
         header = self.rules_table.horizontalHeader()
         header.setStretchLastSection(True)
-        header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; font-weight: bold; border: 1px solid #555555; padding: 4px; }")
         
-        # Set vertical header (row numbers) style
+        # Set vertical header
         v_header = self.rules_table.verticalHeader()
-        v_header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; border: 1px solid #555555; }")
-        
-        # Set corner button style (top-left intersection)
-        self.rules_table.setStyleSheet("QTableWidget { gridline-color: #555555; } QTableWidget::corner { background-color: #404040; border: 1px solid #555555; }")
         
         self.rules_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.rules_table.itemSelectionChanged.connect(self.on_rule_selected)

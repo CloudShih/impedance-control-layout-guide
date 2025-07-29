@@ -488,27 +488,16 @@ class AdvancedImpedanceControlGUI(QMainWindow):
                 background-color: #555555;
             }
             QTableWidget {
-                gridline-color: #555555;
                 background-color: #3c3c3c;
                 color: #f0f0f0;
+                gridline-color: #555555;
             }
-            QTableWidget::corner {
-                background-color: #404040;
-                border: 1px solid #555555;
-            }
-            QHeaderView::section {
+            QTableWidget QHeaderView::section {
                 background-color: #404040;
                 color: white;
+                border: 1px solid #666666;
+                padding: 6px;
                 font-weight: bold;
-                border: 1px solid #555555;
-                padding: 4px;
-            }
-            QTableWidget::item {
-                padding: 4px;
-                border: none;
-            }
-            QTableWidget::item:selected {
-                background-color: #555555;
             }
         """)
 
