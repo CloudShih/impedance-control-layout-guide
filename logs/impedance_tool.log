@@ -30,3 +30,34 @@
 2025-07-28 15:57:16,931 - main - INFO - 步驟 4: 生成 Excel 檔案
 2025-07-28 15:57:18,260 - core.template_mapper - INFO - Successfully mapped 20 nets to Excel template: quick_test_output.xlsx
 2025-07-28 15:57:18,261 - main - INFO - === 處理完成! 輸出檔案: quick_test_output.xlsx ===
+2025-07-29 13:39:45,586 - main - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-29 13:39:45,587 - main - INFO - 處理 Netlist 檔案: D:\ClaudeCode\projects\impedenceControll\AN2_SUB_BOARD_FOR_NFC_20250725.NET
+2025-07-29 13:39:45,587 - main - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-29 13:39:45,589 - core.netlist_parser - INFO - Extracted 22 net names from D:\ClaudeCode\projects\impedenceControll\AN2_SUB_BOARD_FOR_NFC_20250725.NET
+2025-07-29 13:39:45,589 - main - INFO - 提取到 22 個網路名稱
+2025-07-29 13:39:45,590 - main - INFO - 步驟 2: 分類網路名稱
+2025-07-29 13:39:45,591 - core.net_classifier - INFO - Classified 22 nets
+2025-07-29 13:39:45,591 - main - INFO -   Communication Interface: 7 個網路
+2025-07-29 13:39:45,592 - main - INFO -   RF: 12 個網路
+2025-07-29 13:39:45,592 - main - INFO -   Clock: 3 個網路
+2025-07-29 13:39:45,592 - main - INFO - 步驟 3: 應用佈局規則
+2025-07-29 13:39:45,592 - core.rule_engine - INFO - Applied layout rules to 22 nets
+2025-07-29 13:39:45,592 - main - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-29 13:39:46,812 - core.template_mapper - INFO - Successfully mapped 22 nets to Excel template: D:\ClaudeCode\projects\impedenceControll\very.xlsx
+2025-07-29 13:39:46,813 - main - INFO - === 處理完成! 輸出檔案: D:\ClaudeCode\projects\impedenceControll\very.xlsx ===
+2025-07-29 13:41:08,634 - config.config_manager - INFO - Loaded configuration from: C:\Users\CLOUDC~1\AppData\Local\Temp\tmpad8k28wu.yaml
+2025-07-29 13:41:08,639 - main - INFO - === 阻抗控制佈局指南生成開始 ===
+2025-07-29 13:41:08,640 - main - INFO - 處理 Netlist 檔案: D:\ClaudeCode\projects\impedenceControll\AN2_SUB_BOARD_FOR_NFC_20250725.NET
+2025-07-29 13:41:08,640 - main - INFO - 步驟 1: 解析 Netlist 檔案
+2025-07-29 13:41:08,641 - core.netlist_parser - INFO - Extracted 22 net names from D:\ClaudeCode\projects\impedenceControll\AN2_SUB_BOARD_FOR_NFC_20250725.NET
+2025-07-29 13:41:08,642 - main - INFO - 提取到 22 個網路名稱
+2025-07-29 13:41:08,642 - main - INFO - 步驟 2: 分類網路名稱
+2025-07-29 13:41:08,643 - core.net_classifier - INFO - Classified 22 nets
+2025-07-29 13:41:08,643 - main - INFO -   Communication Interface: 8 個網路
+2025-07-29 13:41:08,643 - main - INFO -   RF: 12 個網路
+2025-07-29 13:41:08,643 - main - INFO -   Clock: 2 個網路
+2025-07-29 13:41:08,644 - main - INFO - 步驟 3: 應用佈局規則
+2025-07-29 13:41:08,644 - core.rule_engine - INFO - Applied layout rules to 22 nets
+2025-07-29 13:41:08,644 - main - INFO - 步驟 4: 生成 Excel 檔案
+2025-07-29 13:41:08,705 - core.template_mapper - INFO - Successfully mapped 22 nets to Excel template: D:\ClaudeCode\projects\impedenceControll\very.xlsx
+2025-07-29 13:41:08,705 - main - INFO - === 處理完成! 輸出檔案: D:\ClaudeCode\projects\impedenceControll\very.xlsx ===

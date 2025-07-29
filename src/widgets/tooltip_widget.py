@@ -18,7 +18,8 @@ class ToolTipWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent, Qt.ToolTip)
         self.setWindowFlags(Qt.ToolTip | Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        # Remove translucent background to make tooltip opaque
+        # self.setAttribute(Qt.WA_TranslucentBackground)
         
         # Setup UI
         self.init_ui()

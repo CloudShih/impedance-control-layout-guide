@@ -49,13 +49,18 @@ net_classification_rules:
     priority: 10
     
   RF:
-    keywords: ["RF", "ANT", "RX", "TX"]
+    keywords: ["RF", "ANT", "RX", "TX", "WIFI", "BT", "BLE", "2G4", "5G"]
     patterns:
       - ".*RF.*"
       - ".*ANT.*"
       - ".*RX.*"
       - ".*TX.*"
       - ".*ANTENNA.*"
+      - ".*WIFI.*"
+      - ".*BT.*"
+      - ".*BLE.*"
+      - ".*2G4.*"
+      - ".*5G.*"
     exact_matches: []
     category: "RF"
     signal_type: "Single-End"
@@ -96,11 +101,12 @@ net_classification_rules:
     priority: 5
     
   Clock:
-    keywords: ["CLK", "CLOCK", "OSC"]
+    keywords: ["XO", "CLOCK", "OSC", "XTAL"]
     patterns:
-      - ".*CLK.*"
+      - ".*XO.*"
       - ".*CLOCK.*"
       - ".*OSC.*"
+      - ".*XTAL.*"
     exact_matches: []
     category: "Clock"
     signal_type: "Clock"
@@ -203,7 +209,7 @@ template_mapping:
   columns:
     Category: "Category"
     Net_Name: "Net Name"
-    Pin: "Pin (MT7921)"
+    Pin: "Pin"
     Description: "Description"
     Impedance: "Impedance"
     Type: "Type"
