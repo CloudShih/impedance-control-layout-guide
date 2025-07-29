@@ -165,7 +165,7 @@ layout_rules:
     notes: "維持90歐姆差分阻抗"
     
   Power:
-    impedance: "N/A"
+    impedance: "Low Ohm"
     description: "電源線需要足夠的銅厚度以承載電流，並保持低阻抗。"
     width: "Current carrying capacity"
     length_limit: "Minimize resistance"
