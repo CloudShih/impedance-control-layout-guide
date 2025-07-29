@@ -74,7 +74,9 @@ class NetlistProcessor(QWidget):
         layout = QVBoxLayout(self)
         
         # Title
-        layout.addWidget(QLabel("Netlist 處理器"))
+        title_label = QLabel("Netlist 處理器")
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
+        layout.addWidget(title_label)
         
         # Input group
         input_group = QGroupBox("輸入設定")

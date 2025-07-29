@@ -64,7 +64,9 @@ class SignalRuleEditor(QWidget):
         layout = QVBoxLayout(rules_widget)
         
         # Title
-        layout.addWidget(QLabel("信號分類規則"))
+        title_label = QLabel("信號分類規則")
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
+        layout.addWidget(title_label)
         
         # Rules table
         self.rules_table = QTableWidget()
@@ -97,7 +99,9 @@ class SignalRuleEditor(QWidget):
         layout = QVBoxLayout(editor_widget)
         
         # Title
-        layout.addWidget(QLabel("規則編輯器"))
+        title_label = QLabel("規則編輯器")
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
+        layout.addWidget(title_label)
         
         # Basic info group
         basic_group = QGroupBox("基本資訊")

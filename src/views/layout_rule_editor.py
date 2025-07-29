@@ -71,7 +71,7 @@ class LayoutRuleEditor(QWidget):
         
         # Title
         title_label = QLabel("佈局設計規則")
-        title_label.setStyleSheet("font-weight: bold; font-size: 14px;")
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
         layout.addWidget(title_label)
         
         # Rules table
@@ -115,7 +115,7 @@ class LayoutRuleEditor(QWidget):
         
         # Title
         title_label = QLabel("規則編輯器")
-        title_label.setStyleSheet("font-weight: bold; font-size: 14px;")
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
         layout.addWidget(title_label)
         
         # Rule name

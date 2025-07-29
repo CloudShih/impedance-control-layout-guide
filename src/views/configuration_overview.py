@@ -17,7 +17,9 @@ class ConfigurationOverview(QWidget):
         self.controller = controller
         
         layout = QVBoxLayout(self)
-        layout.addWidget(QLabel("配置概覽"))
+        title_label = QLabel("配置概覽")
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
+        layout.addWidget(title_label)
         
         self.overview_text = QTextEdit()
         self.overview_text.setReadOnly(True)
