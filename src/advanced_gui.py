@@ -5,6 +5,15 @@ Advanced GUI for impedance control tool with configuration editing capabilities
 
 import sys
 from pathlib import Path
+
+# Add current directory and parent directory to Python path for module imports
+current_dir = Path(__file__).parent
+parent_dir = current_dir.parent
+
+if str(current_dir) not in sys.path:
+    sys.path.insert(0, str(current_dir))
+if str(parent_dir) not in sys.path:
+    sys.path.insert(0, str(parent_dir))
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget,
     QTabWidget, QMenuBar, QMenu, QAction, QStatusBar, QSplitter,

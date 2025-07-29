@@ -16,132 +16,51 @@
 ## 🚀 快速開始
 
 ### ⚠️ 重要說明
-- **`run.bat` / `launch.sh`** = 功能測試腳本 (驗證工具能否正常工作)
-- **實際使用** = 需要選擇你自己的 netlist 檔案
+- **測試腳本**: `run.bat` / `launch.sh` 僅用於功能驗證
+- **實際使用**: 需要選擇你自己的 netlist 檔案
 
-### 實際使用方法
+### 使用方法
 
-#### 1. 圖形介面 (推薦新手)
+#### 簡單圖形介面 (推薦新手)
 ```bash
-cd src
-python simple_gui.py
-```
-- 🖱️ 點擊選擇你的 netlist 檔案
-- 🖱️ 點擊選擇輸出位置
-- 🖱️ 點擊生成佈局指南
-
-#### 2. 命令列 (推薦專業用戶)
-```bash
-cd src
-python main.py "你的netlist.net" -o "輸出檔案.xlsx"
+python run_simple_gui.py
 ```
 
-#### 3. 功能驗證 (確認工具正常)
+#### 進階圖形介面 (進階用戶)
 ```bash
-雙擊 run.bat  # Windows
-./launch.sh   # Linux/macOS
+python run_advanced_gui.py
 ```
 
-## 📖 詳細說明
+#### 命令列 (專業用戶)
+```bash
+cd src && python main.py "你的netlist.net" -o "輸出.xlsx"
+```
 
-完整的使用說明請查看 **[USER_MANUAL.md](USER_MANUAL.md)**
+## 📖 完整文檔
+
+- **[USER_MANUAL.md](USER_MANUAL.md)** - 完整使用說明書
+- **[test_comprehensive.py](test_comprehensive.py)** - 綜合功能測試
 
 ## 🛠️ 系統需求
 
 - Python 3.8+
-- Windows/macOS/Linux
+- Windows/macOS/Linux  
 - 依賴套件: pandas, openpyxl, pyyaml, PyQt5
 
-## 📂 專案結構
-
-```
-impedenceControll/
-├── src/                          # 主要程式碼
-│   ├── core/                     # 核心模組
-│   │   ├── netlist_parser.py     # Netlist 解析器
-│   │   ├── net_classifier.py     # 網路分類器
-│   │   ├── rule_engine.py        # 規則引擎
-│   │   └── template_mapper.py    # 模板映射器
-│   ├── config/                   # 配置管理
-│   │   ├── config_manager.py     # 配置管理器
-│   │   └── default_config.yaml   # 預設配置
-│   ├── main.py                   # 主程式 (CLI)
-│   └── simple_gui.py             # 圖形介面
-├── tests/                        # 測試套件
-├── examples/                     # 範例檔案
-├── run.bat                       # Windows 啟動腳本
-├── launch.sh                     # Linux/macOS 啟動腳本
-└── USER_MANUAL.md               # 詳細使用說明
-```
-
-## 🎯 使用範例
-
-### 基本使用
+## 🧪 測試驗證
 
 ```bash
-python main.py pcb_netlist.net -o layout_guide.xlsx
-```
+# 綜合功能測試
+python test_comprehensive.py
 
-### 使用自定義配置
-
-```bash
-python main.py netlist.net -c custom_rules.yaml -o output.xlsx
-```
-
-### 批次處理
-
-```python
-from main import process_netlist_to_excel
-
-result = process_netlist_to_excel(
-    netlist_path=Path("design.net"),
-    output_path=Path("guide.xlsx")
-)
-```
-
-## 📊 輸出示例
-
-生成的 Excel 檔案包含：
-
-| Category | Net Name | Description | Impedance | Type | Width |
-|----------|----------|-------------|-----------|------|-------|
-| Communication Interface | I2C0_SCL | I2C總線佈局規則... | 50 Ohm | I2C | 5 mil |
-| RF | ANT1_P | RF信號需要接地包圍... | 50 Ohm | Single-End | Calculated |
-| Power | VDD_CORE | 電源線需要足夠銅厚... | N/A | Power | Current based |
-
-## 🔧 自定義配置
-
-```yaml
-# custom_config.yaml
-net_classification_rules:
-  UART:
-    keywords: ["UART", "RX", "TX"]
-    category: "Communication Interface"
-    signal_type: "UART"
-    
-layout_rules:
-  UART:
-    impedance: "50 Ohm"
-    description: "UART通訊佈局規則"
-    width: "5 mil"
-```
-
-## 🧪 測試
-
-執行測試套件：
-
-```bash
+# 或使用 pytest
 pytest tests/
 ```
 
 ## 📈 版本歷史
 
-- **v2.0** (2025-07-28) - 完整重構，模組化架構，配置驅動
+- **v2.0** (2025-07-29) - 完整重構，模組化架構，GUI 增強
 - **v1.0** - 基礎版本，硬編碼規則
-
-## 🤝 貢獻
-
-歡迎提交 Issues 和 Pull Requests！
 
 ## 📜 授權
 
