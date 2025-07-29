@@ -80,12 +80,12 @@ class LayoutRuleEditor(QWidget):
         self.rules_table.setColumnCount(4)
         self.rules_table.setHorizontalHeaderLabels(["規則名稱", "阻抗", "線寬", "描述"])
         
-        # Set column widths and header styles
+        # Set column widths and header styles - increased default widths  
         header = self.rules_table.horizontalHeader()
         header.setStretchLastSection(True)
-        header.resizeSection(0, 120)
-        header.resizeSection(1, 100)
-        header.resizeSection(2, 80)
+        header.resizeSection(0, 180)  # 規則名稱 (從120增加到180)
+        header.resizeSection(1, 150)  # 阻抗 (從100增加到150)
+        header.resizeSection(2, 120)  # 線寬 (從80增加到120)
         header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; font-weight: bold; border: 1px solid #555555; padding: 4px; }")
         
         # Set vertical header (row numbers) style

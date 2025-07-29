@@ -74,9 +74,13 @@ class SignalRuleEditor(QWidget):
         self.rules_table.setColumnCount(4)
         self.rules_table.setHorizontalHeaderLabels(["規則名稱", "類別", "信號類型", "優先級"])
         
-        # Set header styles - simple approach
+        # Set header styles and column widths
         header = self.rules_table.horizontalHeader()
         header.setStretchLastSection(True)
+        # Set column widths - increased default widths
+        header.resizeSection(0, 180)  # 規則名稱 (原預設約120)
+        header.resizeSection(1, 150)  # 類別 (原預設約100)
+        header.resizeSection(2, 120)  # 信號類型 (原預設約80)
         
         # Set vertical header
         v_header = self.rules_table.verticalHeader()
