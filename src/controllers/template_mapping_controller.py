@@ -6,7 +6,11 @@ Template Mapping Controller for managing template operations
 from typing import List, Dict, Any, Optional
 from PyQt5.QtCore import QObject, pyqtSignal
 
-from ..models.template_mapping_model import TemplateMappingModel
+try:
+    from ..models.template_mapping_model import TemplateMappingModel
+except ImportError:
+    # Fallback for when relative imports don't work
+    from models.template_mapping_model import TemplateMappingModel
 
 
 class TemplateMappingController(QObject):

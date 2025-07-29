@@ -55,6 +55,18 @@ class ConfigurationModel(QObject):
         從YAML檔案載入配置
         """
         try:
+            # Ensure config_path is a proper file path
+            if not isinstance(config_path, (Path, str)):
+                raise ValueError(f"config_path must be a Path or str, got {type(config_path)}: {config_path}")
+            
+            # Convert to Path object if it's a string
+            if isinstance(config_path, str):
+                config_path = Path(config_path)
+            
+            # Validate the path exists
+            if not config_path.exists():
+                raise FileNotFoundError(f"Configuration file not found: {config_path}")
+            
             with open(config_path, 'r', encoding='utf-8') as file:
                 config_data = yaml.safe_load(file)
             
@@ -66,7 +78,7 @@ class ConfigurationModel(QObject):
             return True
             
         except Exception as e:
-            error_msg = f"Failed to load config: {str(e)}"
+            error_msg = f"Failed to load config from {config_path}: {str(e)}"
             self.validationError.emit(error_msg)
             return False
     
@@ -101,38 +113,43 @@ class ConfigurationModel(QObject):
     
     def _parse_config_data(self, config_data: Dict[str, Any]):
         """Parse loaded YAML data into model objects"""
-        
-        # Parse app info
-        self.app_info = config_data.get('app_info', {})
-        
-        # Parse netlist parser settings
-        self.netlist_parser = config_data.get('netlist_parser', {})
-        
-        # Parse signal classification rules
-        signal_rules_data = config_data.get('net_classification_rules', {})
-        self.signal_rules.clear()
-        for rule_name, rule_data in signal_rules_data.items():
-            signal_rule = SignalRuleModel()
-            signal_rule.load_from_dict(rule_name, rule_data)
-            self.signal_rules[rule_name] = signal_rule
-        
-        # Parse layout rules
-        layout_rules_data = config_data.get('layout_rules', {})
-        self.layout_rules.clear()
-        for rule_name, rule_data in layout_rules_data.items():
-            layout_rule = LayoutRuleModel()
-            layout_rule.load_from_dict(rule_name, rule_data)
-            self.layout_rules[rule_name] = layout_rule
-        
-        # Parse template mapping
-        template_data = config_data.get('template_mapping', {})
-        self.template_mapping.load_from_dict(template_data)
-        
-        # Parse UI settings
-        self.ui_settings = config_data.get('ui_settings', {})
-        
-        # Parse logging settings
-        self.logging = config_data.get('logging', {})
+        try:
+            # Parse app info
+            self.app_info = config_data.get('app_info', {})
+            
+            # Parse netlist parser settings
+            self.netlist_parser = config_data.get('netlist_parser', {})
+            
+            # Parse signal classification rules
+            signal_rules_data = config_data.get('net_classification_rules', {})
+            self.signal_rules.clear()
+            for rule_name, rule_data in signal_rules_data.items():
+                signal_rule = SignalRuleModel()
+                signal_rule.load_from_dict(rule_name, rule_data)
+                self.signal_rules[rule_name] = signal_rule
+            
+            # Parse layout rules
+            layout_rules_data = config_data.get('layout_rules', {})
+            self.layout_rules.clear()
+            for rule_name, rule_data in layout_rules_data.items():
+                layout_rule = LayoutRuleModel()
+                layout_rule.load_from_dict(rule_name, rule_data)
+                self.layout_rules[rule_name] = layout_rule
+            
+            # Parse template mapping
+            template_data = config_data.get('template_mapping', {})
+            self.template_mapping.load_from_dict(template_data)
+            
+            # Parse UI settings
+            self.ui_settings = config_data.get('ui_settings', {})
+            
+            # Parse logging settings
+            self.logging = config_data.get('logging', {})
+            
+        except Exception as e:
+            error_msg = f"Error parsing configuration data: {str(e)}"
+            print(error_msg)
+            raise  # Re-raise the exception
     
     def _build_config_data(self) -> Dict[str, Any]:
         """Build YAML data from current model objects"""

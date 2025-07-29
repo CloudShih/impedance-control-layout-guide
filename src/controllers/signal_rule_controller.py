@@ -6,7 +6,11 @@ Signal Rule Controller for managing signal classification rule operations
 from typing import List, Dict, Any, Optional
 from PyQt5.QtCore import QObject, pyqtSignal
 
-from ..models.signal_rule_model import SignalRuleModel
+try:
+    from ..models.signal_rule_model import SignalRuleModel
+except ImportError:
+    # Fallback for when relative imports don't work
+    from models.signal_rule_model import SignalRuleModel
 
 
 class SignalRuleController(QObject):
