@@ -184,6 +184,9 @@ class TemplateMappingEditor(QWidget):
         v_header = self.column_table.verticalHeader()
         v_header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; border: 1px solid #555555; }")
         
+        # Set corner button style (top-left intersection)
+        self.column_table.setStyleSheet("QTableWidget { gridline-color: #555555; } QTableWidget::corner { background-color: #404040; border: 1px solid #555555; }")
+        
         self.column_table.setSelectionBehavior(QTableWidget.SelectRows)
         add_tooltip(self.column_table, "管理Excel輸出的欄位映射關係")
         
@@ -603,6 +606,9 @@ class TemplateMappingEditor(QWidget):
         
         preview_v_header = self.preview_table.verticalHeader()
         preview_v_header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; border: 1px solid #555555; }")
+        
+        # Set preview table corner button style
+        self.preview_table.setStyleSheet("QTableWidget { gridline-color: #555555; } QTableWidget::corner { background-color: #404040; border: 1px solid #555555; }")
         
         # Auto-resize columns
         self.preview_table.resizeColumnsToContents()

@@ -83,6 +83,9 @@ class SignalRuleEditor(QWidget):
         v_header = self.rules_table.verticalHeader()
         v_header.setStyleSheet("QHeaderView::section { background-color: #404040; color: white; border: 1px solid #555555; }")
         
+        # Set corner button style (top-left intersection)
+        self.rules_table.setStyleSheet("QTableWidget { gridline-color: #555555; } QTableWidget::corner { background-color: #404040; border: 1px solid #555555; }")
+        
         self.rules_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.rules_table.itemSelectionChanged.connect(self.on_rule_selected)
         layout.addWidget(self.rules_table)
