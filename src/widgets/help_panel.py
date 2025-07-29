@@ -43,14 +43,12 @@ class HelpPanel(QWidget):
         # Context selector
         self.create_context_selector(layout)
         
-        # Content area
+        # Content area - expanded to use full available space
         self.content_area = QTextEdit()
         self.content_area.setReadOnly(True)
-        self.content_area.setMaximumHeight(400)
+        # Remove height limit to allow expansion
+        # self.content_area.setMaximumHeight(400)
         layout.addWidget(self.content_area)
-        
-        # Quick action buttons
-        self.create_quick_actions(layout)
         
         # Apply styling
         self.apply_styling()
@@ -81,33 +79,6 @@ class HelpPanel(QWidget):
         
         parent_layout.addLayout(selector_layout)
     
-    def create_quick_actions(self, parent_layout):
-        """Create quick action buttons"""
-        actions_frame = QFrame()
-        actions_layout = QVBoxLayout(actions_frame)
-        
-        # Quick actions label
-        quick_label = QLabel("快速操作")
-        quick_font = QFont()
-        quick_font.setPointSize(10)
-        quick_font.setBold(True)
-        quick_label.setFont(quick_font)
-        actions_layout.addWidget(quick_label)
-        
-        # Action buttons
-        self.quick_actions = [
-            ("新增信號規則", "signal", "add_signal_rule"),
-            ("載入配置檔案", "overview", "load_config"),
-            ("驗證配置", "overview", "validate_config"),
-            ("處理Netlist", "process", "process_netlist")
-        ]
-        
-        for action_text, context, action_id in self.quick_actions:
-            btn = QPushButton(action_text)
-            btn.clicked.connect(lambda checked, ctx=context, aid=action_id: self.handle_quick_action(ctx, aid))
-            actions_layout.addWidget(btn)
-        
-        parent_layout.addWidget(actions_frame)
     
     def switch_context(self, context_id):
         """Switch to a different help context"""
