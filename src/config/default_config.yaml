@@ -21,176 +21,391 @@ netlist_parser:
 # Net Classification Rules
 # 網路分類規則
 net_classification_rules:
-  I2C:
-    keywords: ["I2C", "SCL", "SDA", "ADR"]
-    patterns: 
-      - ".*I2C.*"
-      - ".*SCL.*" 
-      - ".*SDA.*"
-      - ".*ADR.*"
-    exact_matches: []
-    category: "Communication Interface"
-    signal_type: "I2C"
-    priority: 10
-    
-  SPI:
-    keywords: ["SPI", "CSB", "MI", "MO", "SCLK", "MOSI", "MISO"]
-    patterns:
-      - ".*SPI.*"
-      - ".*CSB.*"
-      - ".*MI.*"
-      - ".*MO.*"
-      - ".*SCLK.*"
-      - ".*MOSI.*"
-      - ".*MISO.*"
-    exact_matches: []
-    category: "Communication Interface"
-    signal_type: "SPI"
-    priority: 10
-    
-  RF:
-    keywords: ["RF", "ANT", "RX", "TX", "WIFI", "BT", "BLE", "2G4", "5G"]
-    patterns:
-      - ".*RF.*"
-      - ".*ANT.*"
-      - ".*RX.*"
-      - ".*TX.*"
-      - ".*ANTENNA.*"
-      - ".*WIFI.*"
-      - ".*BT.*"
-      - ".*BLE.*"
-      - ".*2G4.*"
-      - ".*5G.*"
-    exact_matches: []
-    category: "RF"
-    signal_type: "Single-End"
-    priority: 20
-    
-  PCIe:
-    keywords: ["PCIE", "PCIe"]
-    patterns:
-      - ".*PCIE.*"
-      - ".*PCIe.*"
-    exact_matches: []
-    category: "High Speed Interface"
-    signal_type: "Differential"
-    priority: 15
-    
-  USB:
-    keywords: ["USB", "DP", "DM"]
-    patterns:
-      - ".*USB.*"
-      - ".*DP.*"
-      - ".*DM.*"
-    exact_matches: []
-    category: "High Speed Interface"
-    signal_type: "Differential"
-    priority: 15
-    
-  Power:
-    keywords: ["VDD", "VCC", "POWER", "GND", "VBAT"]
-    patterns:
-      - ".*VDD.*"
-      - ".*VCC.*"
-      - ".*POWER.*"
-      - ".*GND.*"
-      - ".*VBAT.*"
-    exact_matches: []
-    category: "Power"
-    signal_type: "Power"
-    priority: 5
-    
   Clock:
-    keywords: ["XO", "CLOCK", "OSC", "XTAL"]
-    patterns:
-      - ".*XO.*"
-      - ".*CLOCK.*"
-      - ".*OSC.*"
-      - ".*XTAL.*"
+    category: Clock
+    description: ""
+    enabled: true
     exact_matches: []
-    category: "Clock"
-    signal_type: "Clock"
+    keywords:
+    - XO
+    - CLOCK
+    - OSC
+    - XTAL
+    patterns:
+    - ".*XO.*"
+    - ".*CLOCK.*"
+    - ".*OSC.*"
+    - ".*XTAL.*"
     priority: 12
+    signal_type: Clock
+  I2C:
+    category: Communication Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - I2C
+    - SCL
+    - SDA
+    - ADR
+    patterns:
+    - ".*I2C.*"
+    - ".*SCL.*"
+    - ".*SDA.*"
+    - ".*ADR.*"
+    priority: 10
+    signal_type: I2C
+  SPI:
+    category: Communication Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - SPI
+    - CSB
+    - MI
+    - MO
+    - SCLK
+    - MOSI
+    - MISO
+    patterns:
+    - ".*SPI.*"
+    - ".*CSB.*"
+    - ".*MI.*"
+    - ".*MO.*"
+    - ".*SCLK.*"
+    - ".*MOSI.*"
+    - ".*MISO.*"
+    priority: 10
+    signal_type: SPI
+  UART:
+    category: Communication Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - UART
+    - TX
+    - RX
+    patterns:
+    - ".*UART.*"
+    - ".*TX.*"
+    - ".*RX.*"
+    priority: 10
+    signal_type: UART
+  PCIe:
+    category: High Speed Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - PCIE
+    - PCIe
+    patterns:
+    - ".*PCIE.*"
+    - ".*PCIe.*"
+    priority: 15
+    signal_type: Differential
+  USB:
+    category: High Speed Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - USB
+    - DP
+    - DM
+    patterns:
+    - ".*USB.*"
+    - ".*DP.*"
+    - ".*DM.*"
+    priority: 15
+    signal_type: Differential
+  MIPI_DSI:
+    category: High Speed Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - MIPI_DSI
+    - DSI
+    patterns:
+    - ".*MIPI_DSI.*"
+    - ".*DSI.*"
+    priority: 15
+    signal_type: Differential
+  MIPI_CSI:
+    category: High Speed Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - MIPI_CSI
+    - CSI
+    patterns:
+    - ".*MIPI_CSI.*"
+    - ".*CSI.*"
+    priority: 15
+    signal_type: Differential
+  SPMI:
+    category: System Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - SPMI
+    patterns:
+    - ".*SPMI.*"
+    priority: 8
+    signal_type: SPMI
+  SLIMbus:
+    category: Audio/Bus Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - SLIMbus
+    patterns:
+    - ".*SLIMbus.*"
+    priority: 9
+    signal_type: SLIMbus
+  SDC:
+    category: Storage Interface
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - SDC
+    - SDIO
+    - eMMC
+    - CMD
+    - CLK
+    - DAT
+    patterns:
+    - ".*SDC.*"
+    - ".*SDIO.*"
+    - ".*eMMC.*"
+    - ".*CMD.*"
+    - ".*CLK.*"
+    - ".*DAT.*"
+    priority: 11
+    signal_type: SDC
+  RF:
+    category: RF
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - RF
+    - ANT
+    - RX
+    - TX
+    - WIFI
+    - BT
+    - BLE
+    - 2G4
+    - 5G
+    patterns:
+    - ".*RF.*"
+    - ".*ANT.*"
+    - ".*RX.*"
+    - ".*TX.*"
+    - ".*ANTENNA.*"
+    - ".*WIFI.*"
+    - ".*BT.*"
+    - ".*BLE.*"
+    - ".*2G4.*"
+    - ".*5G.*"
+    priority: 20
+    signal_type: Single-End
+  Power:
+    category: Power
+    description: ""
+    enabled: true
+    exact_matches: []
+    keywords:
+    - VDD
+    - VCC
+    - POWER
+    - GND
+    - VBAT
+    - VIO
+    - VA
+    patterns:
+    - ".*VDD.*"
+    - ".*VCC.*"
+    - ".*POWER.*"
+    - ".*GND.*"
+    - ".*VBAT.*"
+    - ".*VIO.*"
+    - ".*VA.*"
+    priority: 5
+    signal_type: Power
 
 # Layout Rules Configuration
 # 佈局規則配置
 layout_rules:
-  I2C:
-    impedance: "50 Ohm"
-    description: "I2C/I3C應用: AP-I2C和SCP-I2C來自不同的IP，因此請勿將AP/SCP設備連接到同一個I2C總線。I2C0~I2C9具有內部上拉電阻（軟體預設1KΩ，硬體預設10KΩ，也支援3KΩ），因此不需要外部上拉電阻。對於I2C標準模式、快速模式和快速模式增強版，建議將I/O類型配置為開漏（內部上拉1KΩ）。對於高速模式，建議使用推挽式(Push-pull)類型。為提高訊號品質，在SDA線路中串聯一個電阻將有助於改善過衝或下衝。"
-    width: "5 mil"
-    length_limit: "6 inch"
-    spacing: "3W spacing"
-    via_rules: "Minimize vias"
+  PCIe:
+    description: PCIe 差分信號需要嚴格的阻抗控制和長度匹配。
+    enabled: true
+    impedance: "85 Ohm ± 10% differential"
     layer_stack: "Any signal layer"
+    length_limit: "Intrapair length diff: ± 5 mil, Lane-to-lane skew: ≤ 100 mil"
+    notes: "REFCLK Isolation < -60 dB @ < 100 MHz, Differential Crosstalk Tx-to-Rx < -50 dB @ 4 GHz. AC Coupling Capacitors: 0.22uF (0201/0402). Minimize vias, max 1 per layer change, max 2 blind/no buried vias. Good ground shielding."
+    shielding: "Good ground shielding (adjacent and top/bottom layers)"
+    spacing: "Differential pair rules"
+    via_rules: "Minimize vias, max 1 per layer change, max 2 blind/no buried vias"
+    width: "Calculated for 85 Ohm diff"
+
+  USB:
+    description: USB 差分信號需要 90 歐姆差分阻抗控制。
+    enabled: true
+    impedance: "90 Ohm differential"
+    layer_stack: "Any signal layer"
+    length_limit: "SSUSB_TXP/TXN and SSUSB_RXP/RXN skew < 125 um, Total length < 5 inch"
+    notes: "DC Blocking Capacitors: 0.1uF on SSUSB_TXP/TXN. ESD < 0.5 pF for SSUSB diff pairs, < 3 pF for HS/FS diff pairs and ID pin. Minimize vias on USB SS data lines. Max 2 blind/no buried vias if necessary."
+    shielding: "Good ground shielding (adjacent and top/bottom layers)"
+    spacing: "Differential pair rules"
+    via_rules: "Avoid vias on USB SS data lines, max 2 blind/no buried vias"
+    width: "Calculated for 90 Ohm diff"
+
+  MIPI_DSI:
+    description: MIPI DSI 走線佈局應符合 100 歐姆差分阻抗要求。
+    enabled: true
+    impedance: "100 Ohm differential"
+    layer_stack: "Microstrip (top/bottom) or Stripline (internal)"
+    length_limit: "Insertion Loss < 1.7 dB @ fh, Skew: P/N < 60 mil, Data-to-Clock < 33 ps (< 200 mil)"
+    notes: "Power decoupling capacitors near MT8186. Microstrip spacing: >= 3 * h1. Stripline spacing: >= 2.5 * h1."
+    shielding: "Ground plane required"
+    spacing: "Microstrip spacing: >= 3 * h1, Stripline spacing: >= 2.5 * h1"
+    via_rules: "Minimize vias"
+    width: "Calculated for 100 Ohm diff"
+
+  MIPI_CSI:
+    description: MIPI CSI 走線佈局應符合阻抗和偏斜要求。
+    enabled: true
+    impedance: "C-PHY/D-PHY Single-end: 40-55 Ohm (nominal 45/50 Ohm)"
+    layer_stack: "Same layer for group routing"
+    length_limit: "Intra-group skew < 4 ps (< 25 mil) for C/D-PHY 2.8 GSPS. Trio-to-trio skew < 150 ps (< 900 mil) for C-PHY 1.7 GSPS. Lane-to-clock skew < 20 mil, P/N skew < 12 mil for D-PHY. Total length < 4 inch. Insertion loss < 4 dB @ 5 GHz."
+    notes: "Layer transition via distance from group routing and ground via: C-PHY < 300 mil, D-PHY < 500 mil."
+    shielding: "Good ground shielding required"
+    spacing: "Data-to-Data/Clock/DSL/RST spacing >= 2W. DSL/RST spacing >= 2W."
+    via_rules: "Minimize vias, layer transition via distance constraints."
+    width: "Calculated for 40-55 Ohm single-end"
+
+  I2C:
+    description: 'I2C/I3C 應用: AP-I2C 和 SCP-I2C 來自不同的 IP，請勿將 AP/SCP 設備連接到同一個 I2C 總線。I2C0~I2C9 具有內部上拉電阻（軟體預設 1KΩ，硬體預設 10KΩ，也支援 3KΩ），因此不需要外部上拉電阻。對於 I2C 標準模式、快速模式和快速模式增強版，建議將 I/O 類型配置為開漏（內部上拉 1KΩ）。對於高速模式，建議使用推挽式(Push-pull)類型。為提高訊號品質，在 SDA 線路中串聯一個電阻將有助於改善過衝或下衝。'
+    enabled: true
+    impedance: "50 Ohm (standard signal)"
+    layer_stack: "Any signal layer"
+    length_limit: "Not specified"
+    notes: "Avoid AP and SCP devices sharing the same bus. Internal pull-up resistors available. Open drain for standard/fast modes, push-pull for high-speed. Series resistor on SDA for signal quality."
     shielding: "Ground guard preferred"
-    notes: "避免AP和SCP設備共用同一總線"
-    
-  SPI:
-    impedance: "50 Ohm"
-    description: "SPI總線的所有走線應在同一層中由附近的接地走線良好屏蔽。這些走線還應該被n-1和n+1層中的接地走線包圍，並且彼此靠近。SPI總線的所有走線應遠離噪聲源，例如Buck開關節點等。對於PMIC SPI總線，也適用類似的屏蔽要求。PMIC SPI走線應遠離VBUS（插入式尖峰）和Buck開關節點等噪聲源。SOC和PMIC之間的SPI總線的最大長度應短於6英寸（考慮6英寸約等於1納秒的延遲）。"
+    spacing: "Standard spacing"
+    via_rules: "Minimize vias"
     width: "5 mil"
+
+  SPI:
+    description: SPI 總線的所有走線應在同一層中由附近的接地走線良好屏蔽。這些走線還應該被 n-1 和 n+1 層中的接地走線包圍，並且彼此靠近。SPI 總線的所有走線應遠離噪聲源，例如 Buck 開關節點等。
+    enabled: true
+    impedance: "50 Ohm"
+    layer_stack: "Same layer for all signals"
     length_limit: "6 inch"
+    notes: "Keep away from switching noise sources like Buck switching nodes. Max length between SOC and PMIC should be less than 6 inches."
+    shielding: "Ground shielding required"
     spacing: "3W spacing"
     via_rules: "Minimize vias"
-    layer_stack: "Same layer for all signals"
-    shielding: "Ground shielding required"
-    notes: "遠離開關噪聲源，保持良好屏蔽"
-    
-  RF:
-    impedance: "50 Ohm"
-    description: "RF信號需要被接地層包圍，每條走線都應該被接地層良好包圍。"
-    width: "Calculated for 50 Ohm"
+    width: "5 mil"
+
+  UART:
+    description: UART 訊號的佈局準則。
+    enabled: true
+    impedance: "50 Ohm (standard signal)"
+    layer_stack: "Any signal layer"
     length_limit: "Minimize length"
+    notes: "Standard signal routing practices apply."
+    shielding: "Optional"
+    spacing: "3W spacing"
+    via_rules: "Standard via rules"
+    width: "5 mil"
+
+  SPMI:
+    description: SPMI 佈局需要堅實的接地參考和適當的間距。
+    enabled: true
+    impedance: "50 Ohm (standard signal)"
+    layer_stack: "Any signal layer"
+    length_limit: "Minimize length"
+    notes: "Spacing between SPMI_CLK/DATA and other signals: 2.5 * trace width. Keep away from high current switching power planes."
+    shielding: "Good ground shielding"
+    spacing: "2.5 * trace width"
+    via_rules: "Minimize vias"
+    width: "5 mil"
+
+  SLIMbus:
+    description: SLIMbus 走線應具備 50 歐姆阻抗並進行良好接地隔離。
+    enabled: true
+    impedance: "50 Ohm"
+    layer_stack: "Any signal layer"
+    length_limit: "Minimize length"
+    notes: "Keep away from any power supply planes, especially switching power and WSA boost signals. Spacing between SLIMbus data/clock signals: >= 3 * trace width. Spacing between SLIMbus traces and other signals: >= 3 * trace width."
+    shielding: "Good ground isolation from adjacent layers."
+    spacing: ">= 3 * trace width"
+    via_rules: "Minimize vias"
+    width: "5 mil"
+
+  SDC:
+    description: SDC (SD Card / eMMC) 佈局規則。
+    enabled: true
+    impedance: "50 Ohm (single-ended)"
+    layer_stack: "L2 as solid ground reference. Routing on L1/L2 for breakout, main traces on appropriate layers."
+    length_limit: "Breakout region length <= 3810 um. Main route region length <= 101600 um. Length diff between clock and data/command <= 7620 um."
+    notes: "EMI/ESD protection diodes on CMD/CLK/DAT with capacitance < 5 pF. VCC: 3.0V, VCCQ: 1.8V. Breakout: Place ground vias between BGA balls and L2 ground. Routing spacing >= W. Main route spacing: >= 2W."
+    shielding: "L2 as solid ground reference. Ground vias for breakout."
+    spacing: "Routing spacing >= W (breakout). Routing spacing >= 2W (main route)."
+    via_rules: "Ground vias for breakout. Minimize vias in main routing."
+    width: "Calculated for impedance control"
+
+  RF:
+    description: RF 信號需要被接地層包圍，每條走線都應該被接地層良好包圍。
+    enabled: true
+    impedance: "50 Ohm"
+    layer_stack: "Dedicated RF layers"
+    length_limit: "Minimize length"
+    notes: "Minimize vias and sharp bends, maintain impedance continuity. RF antenna pins (WB_RF_2G, WB_RF_5G, GPS_RFIN) should maintain 50 Ohm impedance and good ground shielding. Place GPS external LNA components near antenna and route on L1."
+    shielding: "Ground surrounding required"
     spacing: "5W spacing minimum"
     via_rules: "Minimize vias, use blind/buried vias"
-    layer_stack: "Dedicated RF layers"
-    shielding: "Ground surrounding required"
-    notes: "最小化過孔和尖銳彎曲，保持阻抗連續性"
-    
-  PCIe:
-    impedance: "100 Ohm differential"
-    description: "PCIe差分信號需要嚴格的阻抗控制和長度匹配。"
-    width: "Calculated for 100 Ohm diff"
-    length_limit: "Length matching ±0.1mm"
-    spacing: "Differential pair rules"
-    via_rules: "Minimize vias, maintain differential impedance"
-    layer_stack: "Stripline preferred"
-    shielding: "Ground plane required"
-    notes: "維持差分阻抗和長度匹配"
-    
-  USB:
-    impedance: "90 Ohm differential"
-    description: "USB差分信號需要90歐姆差分阻抗控制。"
-    width: "Calculated for 90 Ohm diff"
-    length_limit: "Length matching ±0.1mm"
-    spacing: "Differential pair rules"
-    via_rules: "Minimize vias"
-    layer_stack: "Stripline preferred"
-    shielding: "Ground plane required"
-    notes: "維持90歐姆差分阻抗"
-    
+    width: "Calculated for 50 Ohm"
+
   Power:
+    description: 電源線需要足夠的銅厚度以承載電流，並保持低阻抗。
+    enabled: true
     impedance: "Low Ohm"
-    description: "電源線需要足夠的銅厚度以承載電流，並保持低阻抗。"
-    width: "Current carrying capacity"
+    layer_stack: "Power/Ground planes"
     length_limit: "Minimize resistance"
+    notes: |
+      Supply Sequencing: VDD_CX must reach 90% of its preset value before VDD_PX is enabled.
+      Star Connection: Use star connection for power traces to prevent DCR issues and ensure DCR meets spec for each power ball. PMIC VIO18_PMU and AP Analog Power Group should use star connection.
+      Decoupling Capacitor Placement: All decoupling capacitors should be placed close to the PMIC. Power traces must go through thorough decoupling capacitors before reaching power balls. Buck capacitors should be placed close to the PMIC and in a shielded enclosure.
+      Ground Layout: All ground pins should connect directly to the top layer ground plane. Buck ground pins connect to capacitors, then to an isolated ground trace/plane, and finally to L3 main ground. Ground pads for bypass capacitors must connect to Layer 2 ground plane via blind/buried vias. Do not connect top layer bypass capacitor ground pads to nearby ground pours to avoid noise pickup.
+      Voltage Drop Limits: IR drop from PMIC LDO pin to AP AVDD power pin < 1%. PCB drop from PMIC VA12 ball to AP AVDD12_xxx ball <= 12 mV. PCB drop from PMIC VA09 ball to AP AVDD09_xxx ball <= 8 mV. PCB drop from PMIC VUSB ball to AP AVDD33_USB ball <= 30 mV.
+      Sensitive Power Line Isolation: Priority isolation for PLL, VCO, Synth, and LO power rails. Remote sense feedback traces require ground shielding and differential pair routing to avoid noise coupling. Buck core power remote sense should connect close to MT8186. Analog and digital power decoupling capacitors should be placed close to MT8168.
+    shielding: "Not required (for general power, but sensitive lines need isolation)"
     spacing: "Voltage clearance"
     via_rules: "Multiple vias for current sharing"
-    layer_stack: "Power/Ground planes"
-    shielding: "Not required"
-    notes: "考慮電流密度和電壓降"
-    
+    width: "Current carrying capacity"
+
   Clock:
+    description: 時鐘信號需要良好的阻抗控制和低抖動設計。
+    enabled: true
     impedance: "50 Ohm"
-    description: "時鐘信號需要良好的阻抗控制和低抖動設計。"
-    width: "5 mil"
+    layer_stack: "Dedicated clock layer"
     length_limit: "Minimize length"
+    notes: "Avoid crosstalk, maintain signal integrity. 26MHz Clock (AP): Recommended < 8 cm, Max < 11 cm. 26MHz Clock (MT6631): < 10 cm, ground shielded and away from noisy signals. Co-CLK (MT6653): < 8 cm, 50 Ohm impedance control, good ground shielding."
+    shielding: "Ground guard recommended"
     spacing: "5W spacing"
     via_rules: "Minimize vias"
-    layer_stack: "Dedicated clock layer"
-    shielding: "Ground guard recommended"
-    notes: "避免串擾，保持信號完整性"
+    width: "5 mil"
     
   Default:
     impedance: "50 Ohm"
