@@ -98,14 +98,14 @@ class AdvancedImpedanceControlGUI(QMainWindow):
         
         open_action = QAction('開啟配置(&O)', self)
         open_action.setShortcut(QKeySequence.Open)
-        open_action.triggered.connect(self.config_controller.load_config_file)
+        open_action.triggered.connect(lambda: self.config_controller.load_config_file())
         file_menu.addAction(open_action)
         
         file_menu.addSeparator()
         
         save_action = QAction('儲存(&S)', self)
         save_action.setShortcut(QKeySequence.Save)
-        save_action.triggered.connect(self.config_controller.save_config_file)
+        save_action.triggered.connect(lambda: self.config_controller.save_config_file())
         file_menu.addAction(save_action)
         
         save_as_action = QAction('另存新檔(&A)', self)
@@ -169,11 +169,11 @@ class AdvancedImpedanceControlGUI(QMainWindow):
         
         # Open config
         open_action = toolbar.addAction('開啟')
-        open_action.triggered.connect(self.config_controller.load_config_file)
+        open_action.triggered.connect(lambda: self.config_controller.load_config_file())
         
         # Save config
         save_action = toolbar.addAction('儲存')
-        save_action.triggered.connect(self.config_controller.save_config_file)
+        save_action.triggered.connect(lambda: self.config_controller.save_config_file())
         
         toolbar.addSeparator()
         
