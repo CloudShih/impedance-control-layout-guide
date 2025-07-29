@@ -75,7 +75,8 @@ class NetlistProcessor(QWidget):
         
         # Title
         title_label = QLabel("Netlist 處理器")
-        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
+        title_label.setAutoFillBackground(True)
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; color: white; padding: 5px; background: #2b2b2b; border: none;")
         layout.addWidget(title_label)
         
         # Input group

@@ -154,7 +154,8 @@ class TemplateMappingEditor(QWidget):
         
         # Title
         title_label = QLabel("Excel輸出欄位映射設定")
-        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
+        title_label.setAutoFillBackground(True)
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; color: white; padding: 5px; background: #2b2b2b; border: none;")
         layout.addWidget(title_label)
         
         # Column mapping table
@@ -229,7 +230,8 @@ class TemplateMappingEditor(QWidget):
         
         # Title
         title_label = QLabel("Excel輸出格式設定")
-        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
+        title_label.setAutoFillBackground(True)
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; color: white; padding: 5px; background: #2b2b2b; border: none;")
         layout.addWidget(title_label)
         
         # Create settings groups
@@ -293,7 +295,8 @@ class TemplateMappingEditor(QWidget):
         
         # Title
         title_label = QLabel("模板預覽")
-        title_label.setStyleSheet("font-weight: bold; font-size: 14px; background-color: #2b2b2b; color: white; padding: 5px;")
+        title_label.setAutoFillBackground(True)
+        title_label.setStyleSheet("font-weight: bold; font-size: 14px; color: white; padding: 5px; background: #2b2b2b; border: none;")
         layout.addWidget(title_label)
         
         # Refresh button
