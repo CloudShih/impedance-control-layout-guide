@@ -12,9 +12,9 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt
 
 try:
-    from ..models.signal_rule_model import SignalRuleModel
-    from ..controllers.signal_rule_controller import SignalRuleController
-    from ..widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
+    from models.signal_rule_model import SignalRuleModel
+    from controllers.signal_rule_controller import SignalRuleController
+    from widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
 except ImportError:
     # Fallback for when relative imports don't work
     from models.signal_rule_model import SignalRuleModel

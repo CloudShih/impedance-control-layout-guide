@@ -15,7 +15,7 @@ block_cipher = None
 
 # Main application analysis
 a = Analysis(
-    ['run_advanced_gui.py'],  # Entry point script
+    ['src/advanced_gui.py'],  # Entry point script
     pathex=[str(project_root), str(src_dir)],  # Additional paths to search
     binaries=[],
     datas=[
@@ -48,6 +48,7 @@ a = Analysis(
         
         # Data processing modules
         'pandas',
+        'numpy',
         'openpyxl',
         'yaml',
         'jsonschema',
@@ -72,7 +73,6 @@ a = Analysis(
         # Exclude unnecessary modules
         'tkinter',
         'matplotlib',
-        'numpy',
         'scipy',
     ],
     win_no_prefer_redirects=False,

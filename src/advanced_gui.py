@@ -23,18 +23,18 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QIcon, QKeySequence
 
 # Import models and controllers
-from .models.configuration_model import ConfigurationModel
-from .controllers.configuration_controller import ConfigurationController
-from .controllers.signal_rule_controller import SignalRuleController
-from .controllers.layout_rule_controller import LayoutRuleController
-from .controllers.template_mapping_controller import TemplateMappingController
+from models.configuration_model import ConfigurationModel
+from controllers.configuration_controller import ConfigurationController
+from controllers.signal_rule_controller import SignalRuleController
+from controllers.layout_rule_controller import LayoutRuleController
+from controllers.template_mapping_controller import TemplateMappingController
 
 # Import view widgets
-from .views.signal_rule_editor import SignalRuleEditor
-from .views.layout_rule_editor import LayoutRuleEditor
-from .views.template_mapping_editor import TemplateMappingEditor
-from .views.netlist_processor import NetlistProcessor
-from .widgets.help_panel import HelpPanel
+from views.signal_rule_editor import SignalRuleEditor
+from views.layout_rule_editor import LayoutRuleEditor
+from views.template_mapping_editor import TemplateMappingEditor
+from views.netlist_processor import NetlistProcessor
+from widgets.help_panel import HelpPanel
 
 
 class AdvancedImpedanceControlGUI(QMainWindow):

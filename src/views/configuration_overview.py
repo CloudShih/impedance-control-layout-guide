@@ -5,8 +5,8 @@ Configuration Overview widget
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QTextEdit
 
-from ..models.configuration_model import ConfigurationModel
-from ..controllers.configuration_controller import ConfigurationController
+from models.configuration_model import ConfigurationModel
+from controllers.configuration_controller import ConfigurationController
 
 
 class ConfigurationOverview(QWidget):

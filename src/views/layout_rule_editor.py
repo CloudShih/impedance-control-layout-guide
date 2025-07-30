@@ -14,9 +14,9 @@ from PyQt5.QtCore import Qt, pyqtSignal
 import re
 
 try:
-    from ..models.layout_rule_model import LayoutRuleModel
-    from ..controllers.layout_rule_controller import LayoutRuleController
-    from ..widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
+    from models.layout_rule_model import LayoutRuleModel
+    from controllers.layout_rule_controller import LayoutRuleController
+    from widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
 except ImportError:
     # Fallback for when relative imports don't work
     from models.layout_rule_model import LayoutRuleModel

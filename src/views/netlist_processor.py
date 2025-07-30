@@ -11,9 +11,9 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from ..models.configuration_model import ConfigurationModel
-from ..controllers.configuration_controller import ConfigurationController
-from ..widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
+from models.configuration_model import ConfigurationModel
+from controllers.configuration_controller import ConfigurationController
+from widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
 
 # Import the main processing function
 sys.path.append(str(Path(__file__).parent.parent))

@@ -9,9 +9,9 @@ from pathlib import Path
 from typing import Dict, List, Any, Optional
 from PyQt5.QtCore import QObject, pyqtSignal
 
-from .signal_rule_model import SignalRuleModel
-from .layout_rule_model import LayoutRuleModel
-from .template_mapping_model import TemplateMappingModel
+from models.signal_rule_model import SignalRuleModel
+from models.layout_rule_model import LayoutRuleModel
+from models.template_mapping_model import TemplateMappingModel
 
 
 class ConfigurationModel(QObject):

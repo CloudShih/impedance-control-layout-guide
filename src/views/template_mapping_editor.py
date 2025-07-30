@@ -14,15 +14,10 @@ from PyQt5.QtCore import Qt, pyqtSignal, QAbstractTableModel, QModelIndex
 import json
 from pathlib import Path
 
-try:
-    from ..models.template_mapping_model import TemplateMappingModel
-    from ..controllers.template_mapping_controller import TemplateMappingController
-    from ..widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
-except ImportError:
-    # Fallback for when relative imports don't work
-    from models.template_mapping_model import TemplateMappingModel
-    from controllers.template_mapping_controller import TemplateMappingController
-    from widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
+# Use absolute imports for PyInstaller compatibility
+from models.template_mapping_model import TemplateMappingModel
+from controllers.template_mapping_controller import TemplateMappingController
+from widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
 
 
 class ColumnMappingTableModel(QAbstractTableModel):

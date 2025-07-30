@@ -9,11 +9,7 @@ from typing import List, Dict, Any, Optional
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
 
-try:
-    from ..models.configuration_model import ConfigurationModel
-except ImportError:
-    # Fallback for when relative imports don't work
-    from models.configuration_model import ConfigurationModel
+from models.configuration_model import ConfigurationModel
 
 
 class ConfigurationController(QObject):

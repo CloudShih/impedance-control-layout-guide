@@ -6,11 +6,7 @@ Layout Rule Controller for managing layout rule operations
 from typing import List, Dict, Any, Optional
 from PyQt5.QtCore import QObject, pyqtSignal
 
-try:
-    from ..models.layout_rule_model import LayoutRuleModel
-except ImportError:
-    # Fallback for when relative imports don't work
-    from models.layout_rule_model import LayoutRuleModel
+from models.layout_rule_model import LayoutRuleModel
 
 
 class LayoutRuleController(QObject):
