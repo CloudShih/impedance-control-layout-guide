@@ -43,9 +43,19 @@ class ConfigurationModel(QObject):
     def _load_default_config(self):
         """Load default configuration from default_config.yaml"""
         try:
-            default_config_path = Path(__file__).parent.parent / "config" / "default_config.yaml"
+            # Check if running in PyInstaller bundle
+            import sys
+            if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+                # Running in PyInstaller bundle
+                default_config_path = Path(sys._MEIPASS) / "src" / "config" / "default_config.yaml"
+            else:
+                # Running in development
+                default_config_path = Path(__file__).parent.parent / "config" / "default_config.yaml"
+            
             if default_config_path.exists():
                 self.load_config(default_config_path)
+            else:
+                print(f"Warning: Config file not found at {default_config_path}")
         except Exception as e:
             print(f"Warning: Could not load default config: {e}")
     

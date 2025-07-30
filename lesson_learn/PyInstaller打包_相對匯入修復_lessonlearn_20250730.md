@@ -94,6 +94,37 @@ excludes=[
 - **模組缺失錯誤**: 表示 spec 文件中的依賴配置不完整
 - **啟動失敗**: 表示核心模組或依賴有問題
 
+## 配置文件載入問題修復
+
+### 問題發現
+在修復相對匯入問題後，執行檔能正常啟動，但生成的 Excel 文件中所有配置項都顯示為 "TBD"，表示配置文件沒有正確載入。
+
+### 根本原因
+PyInstaller 打包後，`Path(__file__).parent` 這種相對路徑會失效，因為：
+1. 在打包的執行檔中，`__file__` 指向的是臨時解壓目錄
+2. 文件結構與開發環境不同
+3. 需要使用 `sys._MEIPASS` 來獲取正確的資源路徑
+
+### 解決方案
+在所有涉及路徑的代碼中添加 PyInstaller 兼容性檢查：
+
+```python
+import sys
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    # Running in PyInstaller bundle
+    config_path = Path(sys._MEIPASS) / "src" / "config" / "default_config.yaml"
+else:
+    # Running in development
+    config_path = Path(__file__).parent.parent / "config" / "default_config.yaml"
+```
+
+### 修復的文件
+1. `src/models/configuration_model.py`: 配置文件載入邏輯
+2. `src/config/config_manager.py`: 配置管理器路徑處理
+3. `src/advanced_gui.py`: 模組路徑設置
+4. `src/main.py`: 系統路徑設置
+5. `src/views/netlist_processor.py`: 主處理函數匯入
+
 ## 總結出的注意事項
 
 ### 1. PyInstaller 打包最佳實踐
@@ -116,10 +147,16 @@ excludes=[
 - **使用 `--clean` 參數**: 避免舊建構文件的干擾
 - **檢查 build log**: 關注 WARNING 和 INFO 訊息
 
-### 5. 預防措施
+### 5. PyInstaller 路徑處理
+- **檢查執行環境**: 使用 `getattr(sys, 'frozen', False)` 檢測是否在打包環境中
+- **使用 sys._MEIPASS**: 在打包環境中使用 `sys._MEIPASS` 獲取資源路徑
+- **雙重路徑設計**: 為開發和打包環境提供不同的路徑處理邏輯
+
+### 6. 預防措施
 - **CI/CD 整合**: 將打包測試納入自動化流程
 - **模組隔離**: 保持模組間的低耦合
 - **文件組織**: 清晰的專案結構有利於打包
+- **路徑抽象**: 建立統一的路徑處理函數，避免分散的路徑邏輯
 
 ## 適用場景
 本解決方案適用於：

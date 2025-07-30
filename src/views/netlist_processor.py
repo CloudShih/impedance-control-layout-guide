@@ -16,7 +16,13 @@ from controllers.configuration_controller import ConfigurationController
 from widgets.tooltip_widget import add_tooltip, TOOLTIP_TEXTS
 
 # Import the main processing function
-sys.path.append(str(Path(__file__).parent.parent))
+# Handle both development and PyInstaller environments
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    # Running in PyInstaller bundle - src is already in sys.path
+    pass
+else:
+    # Running in development
+    sys.path.append(str(Path(__file__).parent.parent))
 from main import process_netlist_to_excel
 
 

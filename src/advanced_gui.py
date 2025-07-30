@@ -7,8 +7,15 @@ import sys
 from pathlib import Path
 
 # Add current directory and parent directory to Python path for module imports
-current_dir = Path(__file__).parent
-parent_dir = current_dir.parent
+# Handle both development and PyInstaller environments
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    # Running in PyInstaller bundle
+    current_dir = Path(sys._MEIPASS) / "src"
+    parent_dir = Path(sys._MEIPASS)
+else:
+    # Running in development
+    current_dir = Path(__file__).parent
+    parent_dir = current_dir.parent
 
 if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))

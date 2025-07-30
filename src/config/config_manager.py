@@ -28,7 +28,15 @@ class ConfigManager:
         """
         self.config_path = config_path
         self.config_data = {}
-        self.default_config_path = Path(__file__).parent / "default_config.yaml"
+        
+        # Get default config path (PyInstaller compatible)
+        import sys
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            # Running in PyInstaller bundle
+            self.default_config_path = Path(sys._MEIPASS) / "src" / "config" / "default_config.yaml"
+        else:
+            # Running in development
+            self.default_config_path = Path(__file__).parent / "default_config.yaml"
         
     def load_config(self, config_path: Optional[Path] = None) -> Dict[str, Any]:
         """

@@ -8,7 +8,13 @@ import logging
 import sys
 
 # Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent))
+# Handle both development and PyInstaller environments
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    # Running in PyInstaller bundle
+    sys.path.insert(0, str(Path(sys._MEIPASS) / "src"))
+else:
+    # Running in development
+    sys.path.insert(0, str(Path(__file__).parent))
 
 from core.netlist_parser import NetlistParser
 from core.net_classifier import NetClassifier  
