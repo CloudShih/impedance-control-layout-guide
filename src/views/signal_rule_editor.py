@@ -120,6 +120,7 @@ class SignalRuleEditor(QWidget):
         name_layout = QHBoxLayout()
         name_layout.addWidget(QLabel("規則名稱:"))
         self.name_edit = QLineEdit()
+        self.name_edit.setPlaceholderText("例如: I2C 信號")
         add_tooltip(self.name_edit, TOOLTIP_TEXTS['signal_rule_name'])
         name_layout.addWidget(self.name_edit)
         basic_layout.addLayout(name_layout)
@@ -130,9 +131,10 @@ class SignalRuleEditor(QWidget):
         self.category_combo = QComboBox()
         self.category_combo.setEditable(True)
         self.category_combo.addItems([
-            "Communication Interface", "High Speed Interface", 
+            "Communication Interface", "High Speed Interface",
             "RF", "Power", "Clock", "General"
         ])
+        self.category_combo.lineEdit().setPlaceholderText("選擇或輸入類別")
         add_tooltip(self.category_combo, TOOLTIP_TEXTS['signal_category'])
         cat_layout.addWidget(self.category_combo)
         
@@ -140,9 +142,10 @@ class SignalRuleEditor(QWidget):
         self.signal_type_combo = QComboBox()
         self.signal_type_combo.setEditable(True)
         self.signal_type_combo.addItems([
-            "Single-End", "Differential", "I2C", "SPI", 
+            "Single-End", "Differential", "I2C", "SPI",
             "Power", "Clock", "RF"
         ])
+        self.signal_type_combo.lineEdit().setPlaceholderText("選擇或輸入信號類型")
         add_tooltip(self.signal_type_combo, TOOLTIP_TEXTS['signal_type'])
         cat_layout.addWidget(self.signal_type_combo)
         basic_layout.addLayout(cat_layout)
@@ -171,6 +174,7 @@ class SignalRuleEditor(QWidget):
         # Keywords
         criteria_layout.addWidget(QLabel("關鍵字 (用逗號分隔):"))
         self.keywords_edit = QLineEdit()
+        self.keywords_edit.setPlaceholderText("例如: SCL,SDA")
         add_tooltip(self.keywords_edit, TOOLTIP_TEXTS['signal_keywords'])
         criteria_layout.addWidget(self.keywords_edit)
         
@@ -178,6 +182,7 @@ class SignalRuleEditor(QWidget):
         criteria_layout.addWidget(QLabel("正則表達式模式 (每行一個):"))
         self.patterns_edit = QTextEdit()
         self.patterns_edit.setMaximumHeight(100)
+        self.patterns_edit.setPlaceholderText("每行一個模式，例如: ^I2C_")
         add_tooltip(self.patterns_edit, TOOLTIP_TEXTS['signal_patterns'])
         criteria_layout.addWidget(self.patterns_edit)
         
@@ -188,6 +193,7 @@ class SignalRuleEditor(QWidget):
         desc_layout = QVBoxLayout(desc_group)
         self.description_edit = QTextEdit()
         self.description_edit.setMaximumHeight(80)
+        self.description_edit.setPlaceholderText("描述此規則用途...")
         add_tooltip(self.description_edit, TOOLTIP_TEXTS['signal_description'])
         desc_layout.addWidget(self.description_edit)
         layout.addWidget(desc_group)
