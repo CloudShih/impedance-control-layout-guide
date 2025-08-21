@@ -8,6 +8,9 @@ import copy
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from PyQt5.QtCore import QObject, pyqtSignal
+import logging
+
+logger = logging.getLogger(__name__)
 
 from models.signal_rule_model import SignalRuleModel
 from models.layout_rule_model import LayoutRuleModel
@@ -55,9 +58,9 @@ class ConfigurationModel(QObject):
             if default_config_path.exists():
                 self.load_config(default_config_path)
             else:
-                print(f"Warning: Config file not found at {default_config_path}")
+                logger.warning(f"Config file not found at {default_config_path}")
         except Exception as e:
-            print(f"Warning: Could not load default config: {e}")
+            logger.warning(f"Could not load default config: {e}")
     
     def load_config(self, config_path: Path) -> bool:
         """
@@ -158,7 +161,7 @@ class ConfigurationModel(QObject):
             
         except Exception as e:
             error_msg = f"Error parsing configuration data: {str(e)}"
-            print(error_msg)
+            logger.error(error_msg)
             raise  # Re-raise the exception
     
     def _build_config_data(self) -> Dict[str, Any]:
