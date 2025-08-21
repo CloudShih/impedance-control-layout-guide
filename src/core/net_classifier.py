@@ -1,9 +1,8 @@
-"""
-Net classifier module for categorizing network names based on patterns and rules.
-"""
+"""Net classifier module for categorizing network names based on patterns and rules."""
 from typing import List, Dict, Any, Optional, Tuple
 import re
 import logging
+from config.config_manager import ConfigManager
 
 logger = logging.getLogger(__name__)
 
@@ -15,16 +14,15 @@ class NetClassificationError(Exception):
 
 class NetClassifier:
     """Classifier for categorizing network names based on predefined rules."""
-    
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the net classifier.
-        
+
+    def __init__(self, config_manager: Optional[ConfigManager] = None):
+        """Initialize the net classifier using rules from ``ConfigManager``.
+
         Args:
-            config: Configuration dictionary containing classification rules
+            config_manager: Configuration manager providing classification rules.
         """
-        self.config = config or self._get_default_config()
-        self.classification_rules = self.config.get('net_classification_rules', {})
+        self.config_manager = config_manager or ConfigManager()
+        self.classification_rules = self.config_manager.get_classification_rules()
     
     def classify(self, net_names: List[str]) -> Dict[str, Dict[str, Any]]:
         """
@@ -124,60 +122,10 @@ class NetClassifier:
         logger.info(f"Added custom rule: {rule_name}")
     
     def get_classification_summary(self, classified_nets: Dict[str, Dict[str, Any]]) -> Dict[str, int]:
-        """
-        Get summary statistics of classification results.
-        
-        Args:
-            classified_nets: Results from classify() method
-            
-        Returns:
-            Dictionary with category counts
-        """
+        """Get summary statistics of classification results."""
         summary = {}
         for net_data in classified_nets.values():
             category = net_data['category']
             summary[category] = summary.get(category, 0) + 1
-        
+
         return summary
-    
-    def _get_default_config(self) -> Dict[str, Any]:
-        """Get default classification configuration."""
-        return {
-            'net_classification_rules': {
-                'I2C': {
-                    'keywords': ['I2C', 'SCL', 'SDA', 'ADR'],
-                    'patterns': [r'.*I2C.*', r'.*SCL.*', r'.*SDA.*'],
-                    'category': 'Communication Interface',
-                    'signal_type': 'I2C',
-                    'priority': 10
-                },
-                'SPI': {
-                    'keywords': ['SPI', 'CSB', 'MI', 'MO', 'SCLK', 'MOSI', 'MISO'],
-                    'patterns': [r'.*SPI.*', r'.*CSB.*', r'.*MI.*', r'.*MO.*', r'.*SCLK.*'],
-                    'category': 'Communication Interface',
-                    'signal_type': 'SPI',
-                    'priority': 10
-                },
-                'RF': {
-                    'keywords': ['RF', 'ANT', 'RX', 'TX'],
-                    'patterns': [r'.*RF.*', r'.*ANT.*', r'.*RX.*', r'.*TX.*'],
-                    'category': 'RF',
-                    'signal_type': 'Single-End',
-                    'priority': 20
-                },
-                'PCIe': {
-                    'keywords': ['PCIE', 'PCIe'],
-                    'patterns': [r'.*PCIE.*', r'.*PCIe.*'],
-                    'category': 'High Speed Interface', 
-                    'signal_type': 'Differential',
-                    'priority': 15
-                },
-                'Power': {
-                    'keywords': ['VDD', 'VCC', 'POWER', 'GND'],
-                    'patterns': [r'.*VDD.*', r'.*VCC.*', r'.*POWER.*', r'.*GND.*'],
-                    'category': 'Power',
-                    'signal_type': 'Power',
-                    'priority': 5
-                }
-            }
-        }

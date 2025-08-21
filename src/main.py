@@ -87,7 +87,7 @@ def process_netlist_to_excel(netlist_path: Path,
         
         # Step 2: Classify nets
         logger.info("步驟 2: 分類網路名稱")
-        classifier = NetClassifier(config)
+        classifier = NetClassifier(config_manager)
         classified_nets = classifier.classify(net_names)
         
         # Log classification summary
@@ -97,7 +97,7 @@ def process_netlist_to_excel(netlist_path: Path,
         
         # Step 3: Apply layout rules
         logger.info("步驟 3: 應用佈局規則")
-        rule_engine = RuleEngine(config)
+        rule_engine = RuleEngine(config_manager)
         layout_data = rule_engine.apply_rules(classified_nets)
         
         # Step 4: Map to Excel template

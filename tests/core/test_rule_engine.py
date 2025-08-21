@@ -1,36 +1,21 @@
-"""
-Unit tests for rule engine module.
-"""
-import pytest
+"""Tests for the RuleEngine using ConfigManager rules."""
+from src.core.net_classifier import NetClassifier
+from src.core.rule_engine import RuleEngine
+from src.config.config_manager import ConfigManager
 
 
 class TestRuleEngine:
-    """Test cases for layout rule engine functionality."""
-    
-    def test_apply_i2c_rules(self, config_data):
-        """Test application of I2C layout rules."""
-        pass
-    
-    def test_apply_spi_rules(self, config_data):
-        """Test application of SPI layout rules."""
-        pass
-    
-    def test_apply_rf_rules(self, config_data):
-        """Test application of RF layout rules."""
-        pass
-    
-    def test_apply_default_rules(self, config_data):
-        """Test application of default rules for unknown types."""
-        pass
-    
-    def test_rule_priority_handling(self, config_data):
-        """Test handling of rule priorities."""
-        pass
-    
-    def test_custom_rule_application(self, config_data):
-        """Test application of custom user-defined rules."""
-        pass
-    
-    def test_rule_validation(self, config_data):
-        """Test validation of rule format and content."""
-        pass
+    """Test cases for layout rule application."""
+
+    def test_apply_rules_with_config_manager(self, config_data):
+        cm = ConfigManager()
+        cm.config_data = config_data
+
+        classifier = NetClassifier(cm)
+        classified = classifier.classify(["SPI_MOSI"])
+
+        engine = RuleEngine(cm)
+        layout = engine.apply_rules(classified)
+
+        assert layout["SPI_MOSI"]["impedance"] == "50 Ohm"
+

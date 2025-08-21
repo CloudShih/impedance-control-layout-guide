@@ -182,6 +182,9 @@ python main.py --help
 
 ## ⚙️ 配置自定義
 
+系統預設的分類與佈局規則由 `ConfigManager` 統一管理，
+`NetClassifier` 與 `RuleEngine` 初始化時會自動從中載入。
+
 ### 自定義分類規則
 
 建立 `my_config.yaml` 檔案：

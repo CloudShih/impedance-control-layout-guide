@@ -164,8 +164,16 @@ class ConfigManager:
         """
         if not self.config_data:
             self.load_config()
-            
+
         return self.config_data.get(section_name, {})
+
+    def get_classification_rules(self) -> Dict[str, Any]:
+        """Return default net classification rules."""
+        return self.get_section('net_classification_rules')
+
+    def get_layout_rules(self) -> Dict[str, Any]:
+        """Return default layout rules."""
+        return self.get_section('layout_rules')
     
     def get_value(self, key_path: str, default_value: Any = None) -> Any:
         """
