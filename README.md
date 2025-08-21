@@ -39,7 +39,7 @@ cd src && python main.py "你的netlist.net" -o "輸出.xlsx"
 ## 📖 完整文檔
 
 - **[USER_MANUAL.md](USER_MANUAL.md)** - 完整使用說明書
-- **[test_comprehensive.py](test_comprehensive.py)** - 綜合功能測試
+- `examples/manual_tests/` - 手動測試與示範腳本
 
 ## 🛠️ 系統需求
 
@@ -50,11 +50,7 @@ cd src && python main.py "你的netlist.net" -o "輸出.xlsx"
 ## 🧪 測試驗證
 
 ```bash
-# 綜合功能測試
-python test_comprehensive.py
-
-# 或使用 pytest
-pytest tests/
+pytest
 ```
 
 ## 📈 版本歷史

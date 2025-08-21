@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent / 'src'))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'src'))
 
 def quick_functionality_test():
     """Run a quick functionality test."""
@@ -17,7 +17,7 @@ def quick_functionality_test():
         from main import process_netlist_to_excel
         
         # Test with sample data
-        netlist_path = Path("tests/data/sample_netlist.net")
+        netlist_path = Path(__file__).resolve().parents[2] / "tests/data/sample_netlist.net"
         output_path = Path("quick_test_output.xlsx")
         
         if not netlist_path.exists():
