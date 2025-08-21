@@ -89,12 +89,16 @@ def test_layout_rule_model():
     try:
         from src.models.layout_rule_model import LayoutRuleModel
         
-        layout_rule = LayoutRuleModel()
-        layout_rule.name = "I2C_Rule"
-        layout_rule.set_impedance("50 Ohm")
-        layout_rule.set_width("5 mil")
-        layout_rule.set_spacing("3W spacing")
-        layout_rule.set_description("I2C通訊佈局規則")
+        layout_rule = LayoutRuleModel(name="I2C_Rule")
+        changes = []
+        layout_rule.dataChanged.connect(lambda: changes.append(True))
+        layout_rule.update(
+            impedance="50 Ohm",
+            width="5 mil",
+            spacing="3W spacing",
+            description="I2C通訊佈局規則",
+        )
+        assert len(changes) == 1, "dataChanged should emit once for batch update"
         
         # Test validation
         errors = layout_rule.validate()

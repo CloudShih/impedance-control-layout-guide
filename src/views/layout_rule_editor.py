@@ -499,15 +499,13 @@ class LayoutRuleEditor(QWidget):
             QMessageBox.warning(self, "重複名稱", f"規則名稱 '{new_name}' 已存在!")
             return
         
-        # Update rule data
-        self.update_rule_from_editor(rule)
-        
+        # Update rule data and get the (possibly new) name
+        new_name = self.update_rule_from_editor(rule)
+
         # Handle name change
         if new_name != self.current_rule:
             # Remove old rule and add with new name
-            old_rule_data = rule.to_dict()
             del self.layout_rules[self.current_rule]
-            rule.name = new_name
             self.layout_rules[new_name] = rule
             self.current_rule = new_name
         
@@ -522,48 +520,32 @@ class LayoutRuleEditor(QWidget):
         
         QMessageBox.information(self, "成功", f"規則 '{new_name}' 已儲存")
     
-    def update_rule_from_editor(self, rule: LayoutRuleModel):
-        """Update rule object from editor fields"""
-        rule.enabled = self.enabled_checkbox.isChecked()
-        rule.impedance = self.impedance_edit.text().strip()
-        rule.width = self.width_edit.text().strip()
-        rule.length_limit = self.length_limit_edit.text().strip()
-        
-        # Handle numeric fields
-        if self.max_length_spin.value() > 0:
-            rule.max_length_mm = self.max_length_spin.value()
-        else:
-            rule.max_length_mm = None
-        
+    def update_rule_from_editor(self, rule: LayoutRuleModel) -> str:
+        """Update rule object from editor fields and return the new name"""
         diff_imp = self.diff_impedance_edit.text().strip()
-        rule.differential_impedance = diff_imp if diff_imp else None
-        
-        rule.spacing = self.spacing_edit.text().strip()
-        
-        if self.min_spacing_spin.value() > 0:
-            rule.min_spacing_mm = self.min_spacing_spin.value()
-        else:
-            rule.min_spacing_mm = None
-        
-        rule.via_rules = self.via_rules_combo.currentText()
-        
-        if self.max_via_spin.value() > 0:
-            rule.max_via_count = self.max_via_spin.value()
-        else:
-            rule.max_via_count = None
-        
-        rule.layer_stack = self.layer_stack_combo.currentText()
-        
-        # Handle required layers
         layers_text = self.required_layers_edit.text().strip()
-        if layers_text:
-            rule.required_layers = [layer.strip() for layer in layers_text.split(",")]
-        else:
-            rule.required_layers = []
-        
-        rule.shielding = self.shielding_combo.currentText()
-        rule.description = self.description_edit.toPlainText().strip()
-        rule.notes = self.notes_edit.toPlainText().strip()
+
+        updates = {
+            'name': self.rule_name_edit.text().strip(),
+            'enabled': self.enabled_checkbox.isChecked(),
+            'impedance': self.impedance_edit.text().strip(),
+            'width': self.width_edit.text().strip(),
+            'length_limit': self.length_limit_edit.text().strip(),
+            'max_length_mm': self.max_length_spin.value() if self.max_length_spin.value() > 0 else None,
+            'differential_impedance': diff_imp if diff_imp else None,
+            'spacing': self.spacing_edit.text().strip(),
+            'min_spacing_mm': self.min_spacing_spin.value() if self.min_spacing_spin.value() > 0 else None,
+            'via_rules': self.via_rules_combo.currentText(),
+            'max_via_count': self.max_via_spin.value() if self.max_via_spin.value() > 0 else None,
+            'layer_stack': self.layer_stack_combo.currentText(),
+            'required_layers': [layer.strip() for layer in layers_text.split(",")] if layers_text else [],
+            'shielding': self.shielding_combo.currentText(),
+            'description': self.description_edit.toPlainText().strip(),
+            'notes': self.notes_edit.toPlainText().strip(),
+        }
+
+        rule.update(**updates)
+        return updates['name']
     
     def validate_rule_data(self) -> bool:
         """Validate the current rule data"""
