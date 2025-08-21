@@ -6,6 +6,10 @@ import yaml
 import pandas as pd
 from pathlib import Path
 from typing import Dict, Any
+import sys
+
+# Ensure the parent directory (containing ``src``) is importable
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 @pytest.fixture(scope="session")
 def test_data_dir():

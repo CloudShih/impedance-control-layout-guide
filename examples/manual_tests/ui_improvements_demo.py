@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent / 'src'))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'src'))
 
 def test_tooltip_system():
     """Test tooltip system functionality"""
