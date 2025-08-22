@@ -191,10 +191,13 @@ def test_core_functionality():
         from src.core.netlist_parser import NetlistParser
         from src.core.net_classifier import NetClassifier
         from src.core.rule_engine import RuleEngine
+        from src.config.config_manager import ConfigManager
         
         # Test netlist parser
         parser = NetlistParser()
         test_netlist = Path("tests/data/sample_netlist.net")
+        config_manager = ConfigManager()
+        config_manager.load_config()
         
         if test_netlist.exists():
             net_names = parser.parse(test_netlist)
@@ -202,15 +205,15 @@ def test_core_functionality():
             print(f"  解析到 {len(net_names)} 個網路名稱")
         
         # Test classifier
-        classifier = NetClassifier()
+        classifier = NetClassifier(config_manager)
         if test_netlist.exists():
             classified = classifier.classify(net_names)
             assert len(classified) > 0, "Should classify networks"
             print(f"  分類了 {len(classified)} 個網路")
         
         # Test rule engine
-        rule_engine = RuleEngine()
-        config = rule_engine.get_default_config()
+        rule_engine = RuleEngine(config_manager)
+        config = config_manager.config_data
         assert config is not None, "Should have default config"
         print(f"  載入了 {len(config.get('net_classification_rules', {}))} 個分類規則")
         

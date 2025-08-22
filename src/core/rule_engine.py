@@ -1,8 +1,7 @@
-"""
-Rule engine module for applying layout rules based on net classifications.
-"""
+"""Rule engine module for applying layout rules based on net classifications."""
 from typing import List, Dict, Any, Optional
 import logging
+from config.config_manager import ConfigManager
 
 logger = logging.getLogger(__name__)
 
@@ -14,16 +13,15 @@ class RuleEngineError(Exception):
 
 class RuleEngine:
     """Engine for applying layout rules to classified networks."""
-    
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the rule engine.
-        
+
+    def __init__(self, config_manager: Optional[ConfigManager] = None):
+        """Initialize the rule engine using rules from ``ConfigManager``.
+
         Args:
-            config: Configuration dictionary containing layout rules
+            config_manager: Configuration manager providing layout rules.
         """
-        self.config = config or self._get_default_config()
-        self.layout_rules = self.config.get('layout_rules', {})
+        self.config_manager = config_manager or ConfigManager()
+        self.layout_rules = self.config_manager.get_layout_rules()
     
     def apply_rules(self, classified_nets: Dict[str, Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
         """
@@ -147,12 +145,7 @@ class RuleEngine:
         return True
     
     def get_rule_summary(self) -> Dict[str, List[str]]:
-        """
-        Get summary of available rules.
-        
-        Returns:
-            Dictionary with rule types and their descriptions
-        """
+        """Get summary of available rules."""
         summary = {}
         for rule_type, config in self.layout_rules.items():
             summary[rule_type] = {
@@ -160,72 +153,5 @@ class RuleEngine:
                 'impedance': config.get('impedance', 'Not specified'),
                 'signal_types': config.get('applicable_signals', ['General'])
             }
-        
+
         return summary
-    
-    def _get_default_config(self) -> Dict[str, Any]:
-        """Get default layout rules configuration."""
-        return {
-            'layout_rules': {
-                'I2C': {
-                    'impedance': '50 Ohm',
-                    'description': 'I2C/I3C應用: AP-I2C和SCP-I2C來自不同的IP，因此請勿將AP/SCP設備連接到同一個I2C總線。I2C0~I2C9具有內部上拉電阻，因此不需要外部上拉電阻。為提高訊號品質，在SDA線路中串聯一個電阻將有助於改善過衝或下衝。',
-                    'width': '5 mil',
-                    'length_limit': '6 inch',
-                    'spacing': '3W spacing',
-                    'shielding': 'Ground guard preferred',
-                    'layer_stack': 'Any signal layer',
-                    'notes': 'Avoid sharing bus between AP and SCP devices'
-                },
-                'SPI': {
-                    'impedance': '50 Ohm',
-                    'description': 'SPI總線的所有走線應在同一層中由附近的接地走線良好屏蔽。這些走線還應該被n-1和n+1層中的接地走線包圍，並且彼此靠近。SPI總線的所有走線應遠離噪聲源。',
-                    'width': '5 mil',
-                    'length_limit': '6 inch',
-                    'spacing': '3W spacing',
-                    'shielding': 'Ground shielding required',
-                    'layer_stack': 'Same layer for all signals',
-                    'notes': 'Keep away from switching noise sources'
-                },
-                'RF': {
-                    'impedance': '50 Ohm',
-                    'description': 'RF信號需要被接地層包圍，保持阻抗控制，避免過孔和彎曲。',
-                    'width': 'Calculated for 50 Ohm',
-                    'length_limit': 'Minimize length',
-                    'spacing': '5W spacing minimum',
-                    'shielding': 'Ground surrounding required',
-                    'layer_stack': 'Dedicated RF layers',
-                    'notes': 'Minimize vias and sharp bends'
-                },
-                'PCIe': {
-                    'impedance': '100 Ohm differential',
-                    'description': 'PCIe差分信號需要嚴格的阻抗控制和長度匹配。',
-                    'width': 'Calculated for 100 Ohm diff',
-                    'length_limit': 'Length matching ±0.1mm',
-                    'spacing': 'Differential pair rules',
-                    'shielding': 'Ground plane required',
-                    'layer_stack': 'Stripline preferred',
-                    'notes': 'Maintain differential impedance and length matching'
-                },
-                'Power': {
-                    'impedance': 'N/A',
-                    'description': '電源線需要足夠的銅厚度以承載電流，並保持低阻抗。',
-                    'width': 'Current carrying capacity',
-                    'length_limit': 'Minimize resistance',
-                    'spacing': 'Voltage clearance',
-                    'shielding': 'Not required',
-                    'layer_stack': 'Power/Ground planes',
-                    'notes': 'Consider current density and voltage drop'
-                },
-                'Default': {
-                    'impedance': '50 Ohm',
-                    'description': '一般信號線，50歐姆阻抗控制。',
-                    'width': '5 mil',
-                    'length_limit': 'No specific limit',
-                    'spacing': '3W spacing',
-                    'shielding': 'Optional',
-                    'layer_stack': 'Any signal layer',
-                    'notes': 'Standard digital signal routing'
-                }
-            }
-        }
