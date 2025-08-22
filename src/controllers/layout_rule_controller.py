@@ -4,9 +4,13 @@ Layout Rule Controller for managing layout rule operations
 """
 
 from typing import List, Dict, Any, Optional
+import logging
 from PyQt5.QtCore import QObject, pyqtSignal
 
 from models.layout_rule_model import LayoutRuleModel
+
+
+logger = logging.getLogger(__name__)
 
 
 class LayoutRuleController(QObject):
@@ -20,6 +24,7 @@ class LayoutRuleController(QObject):
     ruleRemoved = pyqtSignal(str)       # rule name
     ruleModified = pyqtSignal(str)      # rule name
     ruleValidated = pyqtSignal(str, bool, list)  # rule name, success, errors
+    errorOccurred = pyqtSignal(str)     # error message
     
     def __init__(self, layout_rules: Dict[str, LayoutRuleModel]):
         super().__init__()
@@ -43,8 +48,10 @@ class LayoutRuleController(QObject):
             self.ruleAdded.emit(rule_name)
             return True
             
-        except Exception:
-            return False
+        except Exception as e:
+            logger.exception(f"Failed to add rule {rule_name}: {e}")
+            self.errorOccurred.emit(str(e))
+            raise
     
     def remove_rule(self, rule_name: str) -> bool:
         """Remove a layout rule"""
