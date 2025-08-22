@@ -132,6 +132,7 @@ class LayoutRuleEditor(QWidget):
         name_layout = QHBoxLayout()
         name_layout.addWidget(QLabel("規則名稱:"))
         self.rule_name_edit = QLineEdit()
+        self.rule_name_edit.setPlaceholderText("例如: USB3.0 差分對")
         self.rule_name_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.rule_name_edit, "輸入佈局規則的名稱，例如: I2C, SPI, RF")
         name_layout.addWidget(self.rule_name_edit)
@@ -174,18 +175,21 @@ class LayoutRuleEditor(QWidget):
         
         # Impedance
         self.impedance_edit = QLineEdit()
+        self.impedance_edit.setPlaceholderText("例如: 50 Ohm")
         self.impedance_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.impedance_edit, "設定線路阻抗值，例如: 50 Ohm, 100 Ohm differential")
         impedance_layout.addRow("阻抗:", self.impedance_edit)
         
         # Width
         self.width_edit = QLineEdit()
+        self.width_edit.setPlaceholderText("例如: 0.127 mm")
         self.width_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.width_edit, "設定線路寬度，例如: 5 mil, 0.127 mm")
         impedance_layout.addRow("線寬:", self.width_edit)
         
         # Length limit
         self.length_limit_edit = QLineEdit()
+        self.length_limit_edit.setPlaceholderText("例如: 150 mm")
         self.length_limit_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.length_limit_edit, "設定線路長度限制，例如: 6 inch, 150 mm")
         impedance_layout.addRow("長度限制:", self.length_limit_edit)
@@ -200,6 +204,7 @@ class LayoutRuleEditor(QWidget):
         
         # Differential impedance
         self.diff_impedance_edit = QLineEdit()
+        self.diff_impedance_edit.setPlaceholderText("例如: 100 Ohm")
         self.diff_impedance_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.diff_impedance_edit, "差分阻抗值，例如: 100 Ohm")
         impedance_layout.addRow("差分阻抗:", self.diff_impedance_edit)
@@ -213,6 +218,7 @@ class LayoutRuleEditor(QWidget):
         
         # Spacing
         self.spacing_edit = QLineEdit()
+        self.spacing_edit.setPlaceholderText("例如: 3W spacing")
         self.spacing_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.spacing_edit, "線路間距規則，例如: 3W spacing, 5W minimum")
         spacing_layout.addRow("間距規則:", self.spacing_edit)
@@ -235,6 +241,7 @@ class LayoutRuleEditor(QWidget):
             "允許多層過孔"
         ])
         self.via_rules_combo.setEditable(True)
+        self.via_rules_combo.lineEdit().setPlaceholderText("選擇或輸入規則")
         self.via_rules_combo.currentTextChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.via_rules_combo, "選擇或輸入過孔使用規則")
         spacing_layout.addRow("過孔規則:", self.via_rules_combo)
@@ -265,12 +272,14 @@ class LayoutRuleEditor(QWidget):
             "指定層疊"
         ])
         self.layer_stack_combo.setEditable(True)
+        self.layer_stack_combo.lineEdit().setPlaceholderText("選擇或輸入層疊要求")
         self.layer_stack_combo.currentTextChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.layer_stack_combo, "選擇或輸入層疊要求")
         layer_layout.addRow("層疊要求:", self.layer_stack_combo)
         
         # Required layers
         self.required_layers_edit = QLineEdit()
+        self.required_layers_edit.setPlaceholderText("例如: L1, L2")
         self.required_layers_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.required_layers_edit, "指定必須使用的層，用逗號分隔，例如: L1, L2, L3")
         layer_layout.addRow("必要層:", self.required_layers_edit)
@@ -286,6 +295,7 @@ class LayoutRuleEditor(QWidget):
             "無屏蔽要求"
         ])
         self.shielding_combo.setEditable(True)
+        self.shielding_combo.lineEdit().setPlaceholderText("選擇或輸入屏蔽要求")
         self.shielding_combo.currentTextChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.shielding_combo, "選擇或輸入屏蔽要求")
         layer_layout.addRow("屏蔽要求:", self.shielding_combo)
@@ -300,6 +310,7 @@ class LayoutRuleEditor(QWidget):
         # Description
         self.description_edit = QTextEdit()
         self.description_edit.setMaximumHeight(80)
+        self.description_edit.setPlaceholderText("輸入技術描述...")
         self.description_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.description_edit, "輸入詳細的技術描述和應用說明")
         desc_layout.addRow("技術描述:", self.description_edit)
@@ -307,6 +318,7 @@ class LayoutRuleEditor(QWidget):
         # Notes
         self.notes_edit = QTextEdit()
         self.notes_edit.setMaximumHeight(60)
+        self.notes_edit.setPlaceholderText("輸入備註...")
         self.notes_edit.textChanged.connect(self.on_rule_data_changed)
         add_tooltip(self.notes_edit, "輸入額外的設計備註和注意事項")
         desc_layout.addRow("設計備註:", self.notes_edit)
