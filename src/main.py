@@ -7,6 +7,8 @@ from typing import Optional
 import logging
 import sys
 
+logger = logging.getLogger(__name__)
+
 # Add src to path for imports
 # Handle both development and PyInstaller environments
 if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
@@ -72,7 +74,6 @@ def process_netlist_to_excel(netlist_path: Path,
     
     # Setup logging
     setup_logging(config_manager)
-    logger = logging.getLogger(__name__)
     
     logger.info("=== 阻抗控制佈局指南生成開始 ===")
     logger.info(f"處理 Netlist 檔案: {netlist_path}")
@@ -146,10 +147,10 @@ def main():
             output_path=args.output,
             config_path=args.config
         )
-        print(f"✅ 成功生成佈局指南: {output_file}")
-        
+        logger.info(f"✅ 成功生成佈局指南: {output_file}")
+
     except Exception as e:
-        print(f"❌ 錯誤: {str(e)}")
+        logger.error(f"❌ 錯誤: {str(e)}")
         sys.exit(1)
 
 

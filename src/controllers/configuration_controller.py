@@ -8,6 +8,9 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
+import logging
+
+logger = logging.getLogger(__name__)
 
 from models.configuration_model import ConfigurationModel
 
@@ -76,7 +79,7 @@ class ConfigurationController(QObject):
             self.redo_stack.clear()
             
         except Exception as e:
-            print(f"Warning: Could not save state for undo: {e}")
+            logger.warning(f"Could not save state for undo: {e}")
     
     def load_config_file(self, config_path: Optional[Path] = None) -> bool:
         """
