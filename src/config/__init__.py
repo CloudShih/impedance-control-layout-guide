@@ -2,6 +2,6 @@
 Configuration management module for impedance control tool.
 """
 
-from config.config_manager import ConfigManager, ConfigurationError
+from .config_manager import ConfigManager, ConfigurationError
 
 __all__ = ['ConfigManager', 'ConfigurationError']

@@ -40,11 +40,35 @@ a = Analysis(
         'src.advanced_gui',
         'src.main',
         'src.config.config_manager',
-        'src.controllers',
-        'src.models',
-        'src.views',
-        'src.widgets',
-        'src.core',
+        
+        # Controllers
+        'src.controllers.configuration_controller',
+        'src.controllers.signal_rule_controller',
+        'src.controllers.layout_rule_controller',
+        'src.controllers.template_mapping_controller',
+        
+        # Models
+        'src.models.configuration_model',
+        'src.models.signal_rule_model',
+        'src.models.layout_rule_model',
+        'src.models.template_mapping_model',
+        
+        # Views
+        'src.views.signal_rule_editor',
+        'src.views.layout_rule_editor',
+        'src.views.template_mapping_editor',
+        'src.views.configuration_overview',
+        'src.views.netlist_processor',
+        
+        # Widgets
+        'src.widgets.tooltip_widget',
+        'src.widgets.help_panel',
+        
+        # Core modules
+        'src.core.netlist_parser',
+        'src.core.net_classifier',
+        'src.core.rule_engine',
+        'src.core.template_mapper',
         
         # Data processing modules
         'pandas',
