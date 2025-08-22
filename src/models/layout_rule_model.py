@@ -3,62 +3,61 @@ Layout Rule Model for managing layout design rules
 佈局規則模型，用於管理佈局設計規則
 """
 
-from typing import Dict, Any, List, Optional
+from dataclasses import dataclass, field, fields
+from typing import Any, ClassVar, Dict, List, Optional
 from PyQt5.QtCore import QObject, pyqtSignal
 
 
+@dataclass(eq=False)
 class LayoutRuleModel(QObject):
     """
     Model for individual layout design rule
     個別佈局設計規則的模型
     """
-    
+
     # Signals for notifying changes
-    dataChanged = pyqtSignal()
-    
-    def __init__(self):
+    dataChanged: ClassVar[pyqtSignal] = pyqtSignal()
+
+    name: str = ""
+    impedance: str = "50 Ohm"
+    description: str = ""
+    width: str = "5 mil"
+    length_limit: str = "No specific limit"
+    spacing: str = "3W spacing"
+    via_rules: str = "Standard via rules"
+    layer_stack: str = "Any signal layer"
+    shielding: str = "Optional"
+    notes: str = ""
+    enabled: bool = True
+
+    # Additional technical parameters
+    differential_impedance: Optional[str] = None
+    max_length_mm: Optional[float] = None
+    min_spacing_mm: Optional[float] = None
+    max_via_count: Optional[int] = None
+    required_layers: List[str] = field(default_factory=list)
+
+    def __post_init__(self):
         super().__init__()
-        self.name: str = ""
-        self.impedance: str = "50 Ohm"
-        self.description: str = ""
-        self.width: str = "5 mil"
-        self.length_limit: str = "No specific limit"
-        self.spacing: str = "3W spacing"
-        self.via_rules: str = "Standard via rules"
-        self.layer_stack: str = "Any signal layer"
-        self.shielding: str = "Optional"
-        self.notes: str = ""
-        self.enabled: bool = True
-        
-        # Additional technical parameters
-        self.differential_impedance: Optional[str] = None
-        self.max_length_mm: Optional[float] = None
-        self.min_spacing_mm: Optional[float] = None
-        self.max_via_count: Optional[int] = None
-        self.required_layers: List[str] = []
     
     def load_from_dict(self, name: str, data: Dict[str, Any]):
         """Load layout rule from dictionary data"""
         self.name = name
-        self.impedance = data.get('impedance', '50 Ohm')
-        self.description = data.get('description', '')
-        self.width = data.get('width', '5 mil')
-        self.length_limit = data.get('length_limit', 'No specific limit')
-        self.spacing = data.get('spacing', '3W spacing')
-        self.via_rules = data.get('via_rules', 'Standard via rules')
-        self.layer_stack = data.get('layer_stack', 'Any signal layer')
-        self.shielding = data.get('shielding', 'Optional')
-        self.notes = data.get('notes', '')
-        self.enabled = data.get('enabled', True)
-        
-        # Load additional technical parameters
-        self.differential_impedance = data.get('differential_impedance')
-        self.max_length_mm = data.get('max_length_mm')
-        self.min_spacing_mm = data.get('min_spacing_mm')
-        self.max_via_count = data.get('max_via_count')
-        self.required_layers = data.get('required_layers', [])
-        
-        self.dataChanged.emit()
+        updates = {
+            f.name: data.get(f.name, getattr(self, f.name))
+            for f in fields(self) if f.name != 'name'
+        }
+        self.update(**updates)
+
+    def update(self, **kwargs: Any):
+        """Batch update attributes and emit change signal if modified"""
+        changed = False
+        for key, value in kwargs.items():
+            if hasattr(self, key) and getattr(self, key) != value:
+                setattr(self, key, value)
+                changed = True
+        if changed:
+            self.dataChanged.emit()
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert layout rule to dictionary"""
@@ -74,7 +73,7 @@ class LayoutRuleModel(QObject):
             'notes': self.notes,
             'enabled': self.enabled
         }
-        
+
         # Add optional technical parameters if they exist
         if self.differential_impedance is not None:
             result['differential_impedance'] = self.differential_impedance
@@ -86,92 +85,8 @@ class LayoutRuleModel(QObject):
             result['max_via_count'] = self.max_via_count
         if self.required_layers:
             result['required_layers'] = self.required_layers
-        
+
         return result
-    
-    def set_impedance(self, impedance: str):
-        """Set the impedance requirement"""
-        if self.impedance != impedance:
-            self.impedance = impedance
-            self.dataChanged.emit()
-    
-    def set_description(self, description: str):
-        """Set the rule description"""
-        if self.description != description:
-            self.description = description
-            self.dataChanged.emit()
-    
-    def set_width(self, width: str):
-        """Set the trace width requirement"""
-        if self.width != width:
-            self.width = width
-            self.dataChanged.emit()
-    
-    def set_length_limit(self, length_limit: str):
-        """Set the length limit requirement"""
-        if self.length_limit != length_limit:
-            self.length_limit = length_limit
-            self.dataChanged.emit()
-    
-    def set_spacing(self, spacing: str):
-        """Set the spacing requirement"""
-        if self.spacing != spacing:
-            self.spacing = spacing
-            self.dataChanged.emit()
-    
-    def set_via_rules(self, via_rules: str):
-        """Set the via rules"""
-        if self.via_rules != via_rules:
-            self.via_rules = via_rules
-            self.dataChanged.emit()
-    
-    def set_layer_stack(self, layer_stack: str):
-        """Set the layer stack requirement"""
-        if self.layer_stack != layer_stack:
-            self.layer_stack = layer_stack
-            self.dataChanged.emit()
-    
-    def set_shielding(self, shielding: str):
-        """Set the shielding requirement"""
-        if self.shielding != shielding:
-            self.shielding = shielding
-            self.dataChanged.emit()
-    
-    def set_notes(self, notes: str):
-        """Set the additional notes"""
-        if self.notes != notes:
-            self.notes = notes
-            self.dataChanged.emit()
-    
-    def set_enabled(self, enabled: bool):
-        """Enable or disable the rule"""
-        if self.enabled != enabled:
-            self.enabled = enabled
-            self.dataChanged.emit()
-    
-    def set_differential_impedance(self, diff_impedance: Optional[str]):
-        """Set differential impedance requirement"""
-        if self.differential_impedance != diff_impedance:
-            self.differential_impedance = diff_impedance
-            self.dataChanged.emit()
-    
-    def set_max_length_mm(self, max_length: Optional[float]):
-        """Set maximum length in mm"""
-        if self.max_length_mm != max_length:
-            self.max_length_mm = max_length
-            self.dataChanged.emit()
-    
-    def set_min_spacing_mm(self, min_spacing: Optional[float]):
-        """Set minimum spacing in mm"""
-        if self.min_spacing_mm != min_spacing:
-            self.min_spacing_mm = min_spacing
-            self.dataChanged.emit()
-    
-    def set_max_via_count(self, max_vias: Optional[int]):
-        """Set maximum via count"""
-        if self.max_via_count != max_vias:
-            self.max_via_count = max_vias
-            self.dataChanged.emit()
     
     def add_required_layer(self, layer: str):
         """Add a required layer"""
@@ -252,21 +167,10 @@ class LayoutRuleModel(QObject):
     
     def clone(self) -> 'LayoutRuleModel':
         """Create a copy of this layout rule"""
+        data = self.to_dict()
+        data['name'] = f"{self.name}_copy"
+        if 'required_layers' in data:
+            data['required_layers'] = data['required_layers'].copy()
         new_rule = LayoutRuleModel()
-        new_rule.name = f"{self.name}_copy"
-        new_rule.impedance = self.impedance
-        new_rule.description = self.description
-        new_rule.width = self.width
-        new_rule.length_limit = self.length_limit
-        new_rule.spacing = self.spacing
-        new_rule.via_rules = self.via_rules
-        new_rule.layer_stack = self.layer_stack
-        new_rule.shielding = self.shielding
-        new_rule.notes = self.notes
-        new_rule.enabled = self.enabled
-        new_rule.differential_impedance = self.differential_impedance
-        new_rule.max_length_mm = self.max_length_mm
-        new_rule.min_spacing_mm = self.min_spacing_mm
-        new_rule.max_via_count = self.max_via_count
-        new_rule.required_layers = self.required_layers.copy()
+        new_rule.load_from_dict(data['name'], data)
         return new_rule
